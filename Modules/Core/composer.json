@@ -1,0 +1,20 @@
+{
+    "name": "nwidart/core",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Modules\\Core\\": ""
+        }
+    },
+    "require": {
+        "cviebrock/eloquent-sluggable": "4.2.1",
+        "intervention/image": "^2.3",
+        "zizaco/entrust": "5.2.x-dev"
+    }
+}
