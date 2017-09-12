@@ -4,6 +4,6 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <title>SB Admin - Start Bootstrap Template</title>
-<link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-<link href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ asset('lib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ asset('lib/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ asset('css/sb-admin.css') }}" rel="stylesheet">
