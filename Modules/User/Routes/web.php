@@ -8,3 +8,12 @@ Route::group(['middleware' => 'web', 'prefix' => 'user', 'namespace' => 'Modules
     ]);
 
 });
+
+Route::group(['middleware' => 'api', 'prefix' => 'client', 'namespace' => 'Modules\User\Http\Controllers'], function () {
+
+    Route::post('/register', [
+        'uses' => 'ClientRegistrationController@registerClient',
+        'as' => 'post.register.client',
+    ]);
+
+});
