@@ -181,6 +181,7 @@ return [
          * 3rd Party Service Providers...
          */
         Nwidart\Modules\LaravelModulesServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
     ],
 
     /*

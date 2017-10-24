@@ -4,14 +4,12 @@ namespace Modules\User\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserClient extends Model
+class Subscription extends Model
 {
-    protected $table = 'user_clients';
-
     public $fillable = [
         'user_id',
-        'first_name',
-        'last_name',
-        'email',
+        'product_name',
+        'status',
+        'expired_at',
     ];
 }

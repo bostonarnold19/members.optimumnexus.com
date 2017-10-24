@@ -24,4 +24,9 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function subscriptions()
+    {
+        return $this->hasMany('Modules\User\Entities\Subscription');
+    }
 }

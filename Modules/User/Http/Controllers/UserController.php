@@ -7,7 +7,7 @@ use Modules\User\Interfaces\UserClientRepositoryInterface;
 
 class UserController extends Controller
 {
-    protected $user_repository;
+    protected $user_client_repository;
 
     public function __construct(UserClientRepositoryInterface $user_client_repository)
     {
@@ -19,10 +19,5 @@ class UserController extends Controller
     {
         $users = $this->user_client_repository->all();
         return view('user::index', compact('users'));
-    }
-
-    public function sendEmail()
-    {
-
     }
 }
