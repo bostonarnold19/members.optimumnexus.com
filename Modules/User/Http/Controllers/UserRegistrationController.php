@@ -26,16 +26,16 @@ class UserRegistrationController extends Controller
 
     public function sendMailRegistrationForm(Request $request)
     {
-        $password = str_random(6);
-        $user_data = array(
-            'email' => $request->email,
-            'password' => bcrypt($password),
-        );
         $months = $request->months;
         $today = Carbon::today();
         $expired_at = $today->addMonths($months);
         $existing_user = $this->user_repository->where('email', $request->email)->first();
         if (empty($existing_user)) {
+            $password = str_random(6);
+            $user_data = array(
+                'email' => $request->email,
+                'password' => bcrypt($password),
+            );
             $user = $this->user_repository->save($user_data);
             $this->subscription_repository->storeSubscription($expired_at, $user->id, $request->product_name);
             Mail::to($user->email)->send(new RegistrationMail($password));
