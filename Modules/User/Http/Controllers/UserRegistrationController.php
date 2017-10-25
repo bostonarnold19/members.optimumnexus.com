@@ -33,37 +33,25 @@ class UserRegistrationController extends Controller
         );
         $months = $request->months;
         $today = Carbon::today();
+        $expired_at = $today->addMonths($months);
         $existing_user = $this->user_repository->where('email', $request->email)->first();
         if (empty($existing_user)) {
             $user = $this->user_repository->save($user_data);
-            $expired_at = $today->addMonths($months);
-            $subscription_data = array(
-                'product_name' => $request->product_name,
-                'user_id' => $user->id,
-                'status' => 1,
-                'expired_at' => $expired_at,
-            );
-            $this->subscription_repository->save($subscription_data);
+            $this->subscription_repository->storeSubscription($expired_at, $user->id, $request->product_name);
+            Mail::to($user->email)->send(new RegistrationMail($password));
         } else {
-            $product = $this->subscription_repository->where('user_id', $existing_user->id)
-                ->where('product_name', $request->product_name)
-                ->get()
-                ->last();
-
+            $product = $this->subscription_repository->findLastProductAvail($existing_user->id, $request->product_name);
             if (empty($product)) {
-                $expired_at = $today->addMonths($months);
-                $subscription_data = array(
-                    'product_name' => $request->product_name,
-                    'user_id' => $existing_user->id,
-                    'status' => 1,
-                    'expired_at' => $expired_at,
-                );
-                $this->subscription_repository->save($subscription_data);
-                dd('nice');
+                $this->subscription_repository->storeSubscription($expired_at, $user->id, $request->product_name);
             } else {
+                $parse_date = Carbon::parse($product->expired_at);
+                $product_expired_at = $parse_date->addMonths($months);
+                $this->subscription_repository->storeSubscription(
+                    $product_expired_at,
+                    $existing_user->id,
+                    $request->product_name
+                );
             }
         }
-
-        Mail::to($user->email)->send(new RegistrationMail($password));
     }
 }
