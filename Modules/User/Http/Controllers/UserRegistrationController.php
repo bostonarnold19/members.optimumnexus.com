@@ -42,7 +42,7 @@ class UserRegistrationController extends Controller
         } else {
             $product = $this->subscription_repository->findLastProductAvail($existing_user->id, $request->product_name);
             if (empty($product)) {
-                $this->subscription_repository->storeSubscription($expired_at, $user->id, $request->product_name);
+                $this->subscription_repository->storeSubscription($expired_at, $existing_user->id, $request->product_name);
             } else {
                 $parse_date = Carbon::parse($product->expired_at);
                 $product_expired_at = $parse_date->addMonths($months);
