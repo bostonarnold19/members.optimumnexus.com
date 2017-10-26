@@ -2,7 +2,6 @@
 
 namespace Modules\User\Http\Controllers;
 
-use App\Mail\RegistrationMail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -44,14 +43,29 @@ class UserRegistrationController extends Controller
             if (empty($product)) {
                 $this->subscription_repository->storeSubscription($expired_at, $existing_user->id, $request->product_name);
             } else {
-                $parse_date = Carbon::parse($product->expired_at);
-                $product_expired_at = $parse_date->addMonths($months);
-                $this->subscription_repository->storeSubscription(
-                    $product_expired_at,
-                    $existing_user->id,
-                    $request->product_name
-                );
+                switch ($product->status) {
+                    case 0:
+                        $this->subscription_repository->storeSubscription(
+                            $expired_at,
+                            $existing_user->id,
+                            $request->product_name
+                        );
+                        break;
+                    case 1:
+                        $parse_date = Carbon::parse($product->expired_at);
+                        $product_expired_at = $parse_date->addMonths($months);
+                        $this->subscription_repository->storeSubscription(
+                            $product_expired_at,
+                            $existing_user->id,
+                            $request->product_name
+                        );
+                        break;
+                    default:
+                        break;
+                }
+                return;
             }
+
         }
     }
 }
