@@ -7,11 +7,9 @@ use Modules\User\Entities\Permission;
 use Modules\User\Entities\Role;
 use Modules\User\Entities\Subscription;
 use Modules\User\Entities\User;
-use Modules\User\Entities\UserClient;
 use Modules\User\Repositories\PermissionRepository;
 use Modules\User\Repositories\RoleRepository;
 use Modules\User\Repositories\SubscriptionRepository;
-use Modules\User\Repositories\UserClientRepository;
 use Modules\User\Repositories\UserRepository;
 
 class UserServiceProvider extends ServiceProvider
@@ -50,10 +48,6 @@ class UserServiceProvider extends ServiceProvider
 
         $this->app->bind('Modules\User\Interfaces\PermissionRepositoryInterface', function ($app) {
             return new PermissionRepository(new Permission());
-        });
-
-        $this->app->bind('Modules\User\Interfaces\UserClientRepositoryInterface', function ($app) {
-            return new UserClientRepository(new UserClient());
         });
 
         $this->app->bind('Modules\User\Interfaces\SubscriptionRepositoryInterface', function ($app) {

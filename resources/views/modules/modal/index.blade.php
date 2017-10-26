@@ -17,11 +17,11 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($users as $user)
+            @foreach($clients as $client)
             <tr>
-                <td>{{$user->first_name}}</td>
-                <td>{{$user->last_name}}</td>
-                <td>{{$user->email}}</td>
+                <td>{{$client->first_name}}</td>
+                <td>{{$client->last_name}}</td>
+                <td>{{$client->email}}</td>
             </tr>
             @endforeach
         </tbody>

@@ -1,9 +1,9 @@
 <?php
 
-namespace Modules\User\Repositories;
+namespace Modules\Modal\Repositories;
 
 use Modules\Core\Repositories\AbstractEloquentRepository;
-use Modules\User\Interfaces\UserClientRepositoryInterface;
+use Modules\Modal\Interfaces\UserClientRepositoryInterface;
 
 class UserClientRepository extends AbstractEloquentRepository implements UserClientRepositoryInterface
 {

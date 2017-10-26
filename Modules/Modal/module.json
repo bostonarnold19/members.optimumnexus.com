@@ -1,0 +1,14 @@
+{
+    "name": "Modal",
+    "alias": "modal",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Modal\\Providers\\ModalServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

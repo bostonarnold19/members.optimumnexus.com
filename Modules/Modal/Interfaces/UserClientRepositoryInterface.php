@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\User\Interfaces;
+namespace Modules\Modal\Interfaces;
 
 use Modules\Core\Interfaces\EloquentRepositoryInterface;
 
