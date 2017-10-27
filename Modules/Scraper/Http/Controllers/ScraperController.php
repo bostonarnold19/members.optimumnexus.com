@@ -5,9 +5,18 @@ namespace Modules\Scraper\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Scraper\Interfaces\ScraperRepositoryInterface;
 
 class ScraperController extends Controller
 {
+
+    protected $scraper_repository;
+
+    public function __construct(ScraperRepositoryInterface $scraper_repository)
+    {
+        $this->scraper_repository = $scraper_repository;
+    }
+
     /**
      * Display a listing of the resource.
      * @return Response
