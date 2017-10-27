@@ -23,6 +23,7 @@ class ScraperController extends Controller
      */
     public function index()
     {
+        // dd($this->scraper_repository->all());
         return view('scraper::index');
     }
 

@@ -4,7 +4,7 @@ namespace Modules\Scraper\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Workshop extends Model
+class Scraper extends Model
 {
     /**
      * The attributes that are mass assignable.
