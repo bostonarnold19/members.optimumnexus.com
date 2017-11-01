@@ -5,7 +5,7 @@
         @yield('style')
     </head>
     <body class="fixed-nav sticky-footer bg-dark" id="page-top">
-        @include('partials.dashboard._nav')
+        @include('partials.dashboard.nav._modal')
         <main>
             <div class="content-wrapper">
                 <div class="container-fluid">

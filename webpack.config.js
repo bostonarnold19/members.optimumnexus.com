@@ -9,7 +9,7 @@ module.exports = {
       './resources/assets/js/service_modal.js',
     ],
     service_scrapper: [
-      './resources/assets/js/service_scrapper.js',
+      './resources/assets/js/service_scraper.js',
     ],
   },
   output: {

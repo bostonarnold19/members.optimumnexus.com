@@ -1,18 +1,19 @@
-@extends('layouts.dashboard')
-@section('title', 'IMF | Workshop')
+@extends('layouts.scraper')
 @section('content')
 <ol class="breadcrumb">
     <li class="breadcrumb-item">
-        <a href="#">Home</a>
+        <a href="#">Scraper</a>
     </li>
-    <li class="breadcrumb-item active">IMF Workshop</li>
+    <li class="breadcrumb-item active">Dashboard</li>
 </ol>
+<h1>Scraper</h1>
+<br>
 @if(isset($user_workshop->id))
     <a class="pull-right" target="_blank" href="{{route('user.workshop',['id' => $user_workshop->id, 'custom_url' => $user_workshop->custom_url])}}">View Workshop</a>
 @endif
 <form id="workshop_form">
   {!! csrf_field() !!}
-  <input type="hidden" id="workshop_id" value="{{@$user_workshop->id}}"> 
+  <input type="hidden" id="workshop_id" value="{{@$user_workshop->id}}">
   <div class="form-group">
     <label for="custom_url">Custom URL</label>
     <input type="custom_url" value="{{ @$user_workshop->custom_url }}" id="custom_url" data-parsley-required="true" data-parsley-trigger="keyup" class="form-control" name="custom_url"  aria-describedby="customUrlHelp" placeholder="Enter your custom url">
@@ -53,7 +54,7 @@
       // $('#custom_url').on('keyup',function () {
       //     var slug_url = $(this).val();
       //     $(this).val(slugify(slug_url));
-          
+
       // });
 
         $("#btn-save-workshop").on('click', function() {
@@ -70,10 +71,10 @@
             viewTab.find('.tab-content').append(loader_image_bar_obj[0].outerHTML);
             viewTab.find('.loader-image-bar').removeClass('hide');
 
-            var workshop_config       = {!! $workshop_config !!}; 
+            var workshop_config       = {!! $workshop_config !!};
             var method_action         = 'post';
             var method_url            = workshop_config.store;
-            var workshop_id           = $('#workshop_id').val(); 
+            var workshop_id           = $('#workshop_id').val();
 
             if (workshop_id != '') {
               method_url = workshop_config.update.replace('@id', workshop_id);
@@ -114,7 +115,7 @@
                   return;
                 }
 
-                setTimeout(function() { 
+                setTimeout(function() {
                     location.reload(true);
                 }, 1000);
 

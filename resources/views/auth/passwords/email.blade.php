@@ -15,8 +15,8 @@
             </div>
             <a class="btn btn-primary btn-block" href="#">Reset Password</a>
         </form>
-        <div class="text-center">
-            <a class="d-block small mt-3" href="{{ route('register') }}">Register an Account</a>
+        <br>
+        <div>
             <a class="d-block small" href="{{ route('login') }}">Login Page</a>
         </div>
     </div>

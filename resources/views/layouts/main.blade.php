@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         @include('partials.main._head')
-        @yield('styles')
+        @yield('style')
     </head>
     <body class="bg-dark">
         <main>

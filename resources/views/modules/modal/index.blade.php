@@ -1,12 +1,13 @@
-@extends('layouts.dashboard')
+@extends('layouts.modal')
 @section('content')
 <ol class="breadcrumb">
     <li class="breadcrumb-item">
-        <a href="#">Dashboard</a>
+        <a href="#">Modal</a>
     </li>
-    <li class="breadcrumb-item active">My Dashboard</li>
+    <li class="breadcrumb-item active">Dashboard</li>
 </ol>
 <h1>Clients</h1>
+<br>
 <div class="table-responsive">
     <table class="table">
         <thead>

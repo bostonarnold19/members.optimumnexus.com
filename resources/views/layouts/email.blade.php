@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         @include('partials.email._head')
-        @yield('styles')
+        @yield('style')
     </head>
     <body>
         <main>
