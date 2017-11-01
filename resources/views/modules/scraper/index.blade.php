@@ -7,7 +7,12 @@
     </li>
     <li class="breadcrumb-item active">IMF Workshop</li>
 </ol>
-<form>
+@if(isset($user_workshop->id))
+    <a class="pull-right" target="_blank" href="{{route('user.workshop',['id' => $user_workshop->id, 'custom_url' => $user_workshop->custom_url])}}">View Workshop</a>
+@endif
+<form id="workshop_form">
+  {!! csrf_field() !!}
+  <input type="hidden" id="workshop_id" value="{{@$user_workshop->id}}"> 
   <div class="form-group">
     <label for="custom_url">Custom URL</label>
     <input type="custom_url" value="{{ @$user_workshop->custom_url }}" id="custom_url" data-parsley-required="true" data-parsley-trigger="keyup" class="form-control" name="custom_url"  aria-describedby="customUrlHelp" placeholder="Enter your custom url">
@@ -42,4 +47,81 @@
   <button type="button" id="btn-save-workshop" class="btn btn-primary pull-right">Save</button>
 
 </form>
+@endsection
+@section('script')
+    <script type="text/javascript">
+      // $('#custom_url').on('keyup',function () {
+      //     var slug_url = $(this).val();
+      //     $(this).val(slugify(slug_url));
+          
+      // });
+
+        $("#btn-save-workshop").on('click', function() {
+
+            var isValid = $("#workshop_form").parsley();
+
+             if( !isValid.validate())
+              return;
+
+            //loading
+            var viewTab               = $('#workshop_div');
+            var loader_image_bar_obj  = $('.loader-image-bar');
+
+            viewTab.find('.tab-content').append(loader_image_bar_obj[0].outerHTML);
+            viewTab.find('.loader-image-bar').removeClass('hide');
+
+            var workshop_config       = {!! $workshop_config !!}; 
+            var method_action         = 'post';
+            var method_url            = workshop_config.store;
+            var workshop_id           = $('#workshop_id').val(); 
+
+            if (workshop_id != '') {
+              method_url = workshop_config.update.replace('@id', workshop_id);
+              method_action = 'put';
+            }
+            console.log(method_url);
+            $.ajax({
+              type: method_action,
+              url: method_url,
+              cache: false,
+              data: $('#workshop_form').serialize(),
+              dataType: 'json',
+              error: function (jqXHR, textStatus, errorThrown) {
+                $('.loader-image-bar').addClass('hide');
+                if (textStatus != 'error')
+                      return;
+
+                    if (errorThrown == 'Unprocessable Entity'){
+
+                      var responseJSON = jqXHR.responseJSON;
+
+                      try {
+                        swal("Oops! Something went wrong", responseJSON[Object.keys(responseJSON)[0]][0], "error");
+                        return;
+                      } catch (e) {
+                        // do nothing
+                      }
+                    }
+
+                    swal("Oops! Something went wrong", 'Failed to submit.', "error");
+              },
+
+              success: function (data) {
+                $('.loader-image-bar').addClass('hide');
+                // if data is a error specific message
+                if (typeof data.error_message !== 'undefined' && data.error_message) {
+                  swal("Oops! Something went wrong", data.error_message, "error");
+                  return;
+                }
+
+                setTimeout(function() { 
+                    location.reload(true);
+                }, 1000);
+
+                swal("Good job!", data.msg, "success");
+              }
+            });
+        });
+
+    </script>
 @endsection

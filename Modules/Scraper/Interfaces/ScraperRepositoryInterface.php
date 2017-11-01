@@ -6,5 +6,5 @@ use Modules\Core\Interfaces\EloquentRepositoryInterface;
 
 interface ScraperRepositoryInterface extends EloquentRepositoryInterface
 {
-    //
+ 	public function RouteConfig();   
 }

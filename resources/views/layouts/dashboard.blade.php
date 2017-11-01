@@ -4,6 +4,12 @@
         @include('partials.dashboard._head')
         @yield('styles')
     </head>
+    <div class="loader-image-bar hide">
+        <div class="loader-image-wrapper">
+          <img src="{{ url('loaders/bar.gif') }}" alt="image loader">
+        </div>
+        <div class="bg-overlay-white"></div>
+    </div>
     <body class="fixed-nav sticky-footer bg-dark" id="page-top">
         @include('partials.dashboard._nav')
         <main>

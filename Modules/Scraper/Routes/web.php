@@ -17,4 +17,10 @@ Route::group(['middleware' => 'web', 'namespace' => 'Modules\Scraper\Http\Contro
 
 });
 
-Route::get('user-workshop/{id}/{custom_url}', 'WorkshopController@userWorkshop')->name('user.workshop');
+Route::get('user-workshop/{id}/{custom_url}', 'ScraperController@userWorkshop')->name('user.workshop');
+
+Route::group(['namespace' => 'Modules\Scraper\Http\Controllers'], function () {
+
+    Route::get('user-workshop/{id}/{custom_url}', 'ScraperController@userWorkshop')->name('user.workshop');
+
+});
