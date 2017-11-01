@@ -1,9 +1,24 @@
-@extends('scraper::layouts.master')
-
+@extends('layouts.dashboard')
 @section('content')
-    <h1>Hello World</h1>
-
-    <p>
-        This view is loaded from module: {!! config('scraper.name') !!}
-    </p>
-@stop
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="#">Workshop</a>
+    </li>
+    <li class="breadcrumb-item active">IMF Workshop</li>
+</ol>
+<h1>Clients</h1>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+</div>
+@endsection
