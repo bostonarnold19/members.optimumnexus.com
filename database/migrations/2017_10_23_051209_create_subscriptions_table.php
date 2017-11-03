@@ -19,7 +19,8 @@ class CreateSubscriptionsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->string('product_name');
-            $table->integer('status')->default(0);
+            $table->string('status')->default('active');
+            $table->string('payment_type')->default('paid');
             $table->dateTime('expired_at');
             $table->timestamps();
         });

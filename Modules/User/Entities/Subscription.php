@@ -10,6 +10,7 @@ class Subscription extends Model
         'user_id',
         'product_name',
         'status',
+        'payment_type',
         'expired_at',
     ];
 }

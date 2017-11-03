@@ -7,12 +7,13 @@ use Modules\User\Interfaces\SubscriptionRepositoryInterface;
 
 class SubscriptionRepository extends AbstractEloquentRepository implements SubscriptionRepositoryInterface
 {
-    public function storeSubscription($expired_at, $user_id, $product_name)
+    public function storeSubscription($expired_at, $user_id, $product_name, $payment_type)
     {
         $subscription_data = array(
             'product_name' => $product_name,
             'user_id' => $user_id,
-            'status' => 1,
+            'status' => 'active',
+            'payment_type' => $payment_type,
             'expired_at' => $expired_at,
         );
         $this->save($subscription_data);

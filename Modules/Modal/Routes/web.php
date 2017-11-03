@@ -5,6 +5,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'client', 'namespace' => 'Modul
     Route::get('/', [
         'uses' => 'UserClientController@index',
         'as' => 'get.clients.index',
+        'middleware' => 'subscription.modal',
     ]);
 
 });
