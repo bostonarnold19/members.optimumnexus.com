@@ -9,7 +9,7 @@
         <a class="nav-link" href="{{ url('/scraper') }}">
           <i class="fa fa-fw fa-dashboard"></i>
           <span class="nav-link-text">
-          Dashboard</span>
+          Scrapper</span>
         </a>
       </li>
     </ul>

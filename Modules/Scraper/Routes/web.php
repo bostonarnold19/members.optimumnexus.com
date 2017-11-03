@@ -11,13 +11,11 @@
 |
  */
 
-Route::group(['middleware' => ['web'], 'namespace' => 'Modules\Scraper\Http\Controllers'], function () {
+Route::group(['middleware' => ['web','auth'], 'namespace' => 'Modules\Scraper\Http\Controllers'], function () {
 
     Route::resource('scraper', 'ScraperController');
 
 });
-
-Route::get('user-workshop/{id}/{custom_url}', 'ScraperController@userWorkshop')->name('user.workshop');
 
 Route::group(['namespace' => 'Modules\Scraper\Http\Controllers'], function () {
 
