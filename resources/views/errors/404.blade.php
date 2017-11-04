@@ -78,7 +78,7 @@
 
              <div class="content">
                  <div class="title m-b-md">
-                     Error 403
+                     Error 404
                  </div>
              </div>
          </div>

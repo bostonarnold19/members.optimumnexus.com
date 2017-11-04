@@ -36,7 +36,7 @@
             <b>Scraper</b>
           </a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item small" href="#">
+          <a class="dropdown-item small" href="{{ route('get.user.product-list') }}">
             View all products
           </a>
         </div>

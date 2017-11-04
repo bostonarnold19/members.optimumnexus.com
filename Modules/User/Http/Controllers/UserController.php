@@ -2,9 +2,13 @@
 
 namespace Modules\User\Http\Controllers;
 
+use App\Http\Requests\ResetCredentialRequest;
+use App\Mail\RegistrationMail;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Mail;
 use Modules\User\Interfaces\SubscriptionRepositoryInterface;
 use Modules\User\Interfaces\UserRepositoryInterface;
 use Modules\User\Services\SubscriptionService;
@@ -23,6 +27,30 @@ class UserController extends Controller
         $this->user_repository = $user_repository;
         $this->subscription_service = $subscription_service;
         $this->subscription_repository = $subscription_repository;
+        $this->middleware('auth', ['except' => 'sendMailRegistrationForm']);
+    }
+
+    public function productList(Request $request)
+    {
+        return view('user::index');
+    }
+
+    public function resetCredentials(Request $request)
+    {
+        return view('auth.reset');
+    }
+
+    public function updateCredentials(ResetCredentialRequest $request)
+    {
+        $user = Auth::user();
+        $data = array(
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'middle_name' => $request->middle_name,
+            'password' => bcrypt($request->password),
+        );
+        $this->user_repository->update($user->id, $data);
+        return redirect()->route('get.user.product-list');
     }
 
     public function sendMailRegistrationForm(Request $request)
