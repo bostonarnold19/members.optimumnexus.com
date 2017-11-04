@@ -62,5 +62,6 @@ class Kernel extends HttpKernel
         'permission' => \Zizaco\Entrust\Middleware\EntrustPermission::class,
         'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
         'subscription.modal' => \Modules\Modal\Http\Middleware\CheckSubscription::class,
+        'subscription.scraper' => \Modules\Scraper\Http\Middleware\CheckSubscription::class,
     ];
 }
