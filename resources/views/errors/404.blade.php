@@ -80,6 +80,7 @@
                  <div class="title m-b-md">
                      Error 404
                  </div>
+                 <h4>Page not found</h4>
              </div>
          </div>
      </body>

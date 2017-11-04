@@ -80,6 +80,7 @@
                  <div class="title m-b-md">
                      Error 403
                  </div>
+                 <h4>You are not subscribed to this product</h4>
              </div>
          </div>
      </body>
