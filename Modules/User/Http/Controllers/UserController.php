@@ -2,9 +2,7 @@
 
 namespace Modules\User\Http\Controllers;
 
-use App\Http\Requests\ResetCredentialRequest;
 use App\Mail\RegistrationMail;
-use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -33,24 +31,6 @@ class UserController extends Controller
     public function productList(Request $request)
     {
         return view('user::index');
-    }
-
-    public function resetCredentials(Request $request)
-    {
-        return view('auth.reset');
-    }
-
-    public function updateCredentials(ResetCredentialRequest $request)
-    {
-        $user = Auth::user();
-        $data = array(
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'middle_name' => $request->middle_name,
-            'password' => bcrypt($request->password),
-        );
-        $this->user_repository->update($user->id, $data);
-        return redirect()->route('get.user.product-list');
     }
 
     public function sendMailRegistrationForm(Request $request)
