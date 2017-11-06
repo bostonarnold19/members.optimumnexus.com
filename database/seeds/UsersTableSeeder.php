@@ -1,7 +1,9 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Modules\User\Entities\Role;
+use Modules\User\Entities\Subscription;
 use Modules\User\Entities\User;
 
 class UsersTableSeeder extends Seeder
@@ -22,5 +24,15 @@ class UsersTableSeeder extends Seeder
         $admin->password = bcrypt('admin');
         $admin->save();
         $admin->roles()->attach($role_admin);
+
+        $today = Carbon::now();
+        $expired_at = $today->addMonths(1);
+        $subscription = new Subscription();
+        $subscription->user_id = 1;
+        $subscription->product_name = 'scraper';
+        $subscription->status = 'active';
+        $subscription->payment_type = 'paid';
+        $subscription->expired_at = $expired_at;
+        $subscription->save();
     }
 }
