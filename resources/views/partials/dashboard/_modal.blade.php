@@ -14,7 +14,7 @@
         <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <form action="{{ route('logout') }}" method="POST">
           {{ csrf_field() }}
-          <button type="submit" class="btn btn-primary">Logout</a>
+          <button type="submit" class="btn btn-primary">Logout</button>
         </form>
       </div>
     </div>

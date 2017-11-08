@@ -9,6 +9,11 @@
             <a href="{{ url('/client') }}" class="list-group-item">Modal</a>
             <a href="{{ url('/scraper')}}" class="list-group-item">Sraper</a>
         </div>
+        <hr>
+        <form action="{{ route('logout') }}" method="POST">
+            {{ csrf_field() }}
+            <button type="submit" class="form-control btn btn-danger">Logout</button>
+        </form>
     </div>
 </div>
 @endsection
