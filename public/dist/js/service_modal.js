@@ -42754,6 +42754,8 @@ module.exports = function normalizeComponent (
             var that = this;
             if (that.email !== '') {
                 that.checkEmail();
+                console.log(that.email);
+                console.log(that.url);
             }
         }
     },
