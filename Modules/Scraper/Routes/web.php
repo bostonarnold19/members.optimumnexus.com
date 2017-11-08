@@ -22,10 +22,6 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Modules\Scraper\H
 
 Route::group(['namespace' => 'Modules\Scraper\Http\Controllers'], function () {
 
-    Route::group(['middleware' => 'subscription.scraper'], function () {
-
         Route::get('user-workshop/{id}/{custom_url}', 'ScraperController@userWorkshop')->name('user.workshop');
-
-    });
 
 });
