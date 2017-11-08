@@ -30,7 +30,7 @@ class UserApiController extends Controller
     public function userCheck(Request $request)
     {
         $user = $this->user_repository->where('email', $request->email)
-            ->where('status', 1)
+            ->where('status', 'active')
             ->first();
         if (!empty($user)) {
             $subscription = $this->subscription_repository->where('user_id', $user->id)
@@ -68,6 +68,7 @@ class UserApiController extends Controller
             $password = str_random(6);
             $user_data = array(
                 'email' => $request->email,
+                'status' => 'active',
                 'password' => bcrypt($password),
             );
             $user = $this->user_repository->save($user_data);

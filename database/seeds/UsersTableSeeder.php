@@ -21,6 +21,7 @@ class UsersTableSeeder extends Seeder
         $admin->first_name = 'John';
         $admin->last_name = 'Doe';
         $admin->email = 'admin@admin.com';
+        $admin->status = 'active';
         $admin->password = bcrypt('admin');
         $admin->save();
 

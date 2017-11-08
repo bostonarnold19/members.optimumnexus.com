@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('profile_picture')->default('images/user/dummy_user.png');
             $table->string('email')->unique();
             $table->string('password')->nullable();
-            $table->integer('status')->default(0);
+            $table->string('status')->default('inactive');
             $table->rememberToken();
             $table->timestamps();
         });

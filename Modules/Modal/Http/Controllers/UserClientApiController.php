@@ -28,7 +28,7 @@ class UserClientApiController extends Controller
     public function registerClient(Request $request)
     {
         $user = $this->user_repository->where('email', $request->owner_email)
-            ->where('status', 1)
+            ->where('status', 'active')
             ->first();
         if (!empty($user)) {
             $subscription = $this->subscription_repository->where('user_id', $user->id)
