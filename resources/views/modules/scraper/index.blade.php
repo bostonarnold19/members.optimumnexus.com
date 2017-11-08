@@ -1,4 +1,5 @@
 @extends('layouts.scraper')
+@section('title', 'WorkShop')
 @section('content')
 <ol class="breadcrumb">
     <li class="breadcrumb-item">
