@@ -1,9 +1,13 @@
 <?php
 
-Route::group(['middleware' => 'api', 'prefix' => 'registration', 'namespace' => 'Modules\User\Http\Controllers'], function () {
-    Route::get('/send-mail', [
-        'uses' => 'UserController@sendMailRegistrationForm',
+Route::group(['middleware' => 'api', 'prefix' => 'api/user', 'namespace' => 'Modules\User\Http\Controllers'], function () {
+    Route::post('/registration/send-mail', [
+        'uses' => 'UserApiController@sendMailRegistrationForm',
         'as' => 'post.user.send-registration',
+    ]);
+    Route::post('/user-check', [
+        'uses' => 'UserApiController@userCheck',
+        'as' => 'post.user.check',
     ]);
 });
 

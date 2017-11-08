@@ -23,16 +23,26 @@ class UsersTableSeeder extends Seeder
         $admin->email = 'admin@admin.com';
         $admin->password = bcrypt('admin');
         $admin->save();
+
         $admin->roles()->attach($role_admin);
 
         $today = Carbon::now();
         $expired_at = $today->addMonths(1);
-        $subscription = new Subscription();
-        $subscription->user_id = 1;
-        $subscription->product_name = 'scraper';
-        $subscription->status = 'active';
-        $subscription->payment_type = 'paid';
-        $subscription->expired_at = $expired_at;
-        $subscription->save();
+
+        $subscription1 = new Subscription();
+        $subscription1->user_id = 1;
+        $subscription1->product_name = 'scraper';
+        $subscription1->status = 'active';
+        $subscription1->payment_type = 'paid';
+        $subscription1->expired_at = $expired_at;
+        $subscription1->save();
+
+        $subscription2 = new Subscription();
+        $subscription2->user_id = 1;
+        $subscription2->product_name = 'modal';
+        $subscription2->status = 'active';
+        $subscription2->payment_type = 'paid';
+        $subscription2->expired_at = $expired_at;
+        $subscription2->save();
     }
 }
