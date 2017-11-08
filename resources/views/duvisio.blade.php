@@ -352,7 +352,6 @@ $email = "admin@admin.com";
       <script src="{{ asset('assets/js/holder.js') }}"></script>
       <script src="{{ asset('assets/js/index.js') }}"></script>
       <script src="{{ asset('assets/fieldtoclipboard.js') }}"></script>
-      <script src="http://localhost/Applications/matProject/public/dist/js/service_modal.js"></script>
-
+      <script src="{{ asset('dist/js/service_modal.js') }}"></script>
    </body>
 </html>
