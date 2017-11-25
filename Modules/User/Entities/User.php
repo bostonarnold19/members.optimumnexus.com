@@ -17,6 +17,7 @@ class User extends Authenticatable
         'last_name',
         'middle_name',
         'profile_picture',
+        'scraper_affiliate_number',
         'status',
     ];
 

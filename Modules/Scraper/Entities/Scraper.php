@@ -19,6 +19,8 @@ class Scraper extends Model
         'city',
         'zip_code',
         'other_data',
+        'event_location_date',
+        'event_name',
         'custom_url'
 
 

@@ -16,6 +16,11 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Modules\Scraper\H
     Route::group(['middleware' => 'subscription.scraper'], function () {
 
         Route::resource('scraper', 'ScraperController');
+        Route::post('scraper-affiliate-number', 'ScraperController@saveAffiliateNumber')->name('scraper.affiliate');
+        Route::get('create-event', 'ScraperController@createEvent')->name('scraper.create.event');
+        Route::post('scrape-page', 'ScraperController@scrapeSelected')->name('scraper.scrape');
+        Route::post('store-event', 'ScraperController@storeEvent')->name('scraper.store.event');
+        Route::get('view-event', 'ScraperController@eventAttendees')->name('view.event');
     });
 
 });
