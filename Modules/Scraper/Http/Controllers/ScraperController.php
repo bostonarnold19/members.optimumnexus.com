@@ -29,8 +29,9 @@ class ScraperController extends Controller
     {
         //check if user has affiliate number
         if (Auth::user()->scraper_affiliate_number) {
+            $workshop_config = $this->scraper_repository->RouteConfig();
             $user_events = $this->scraper_repository->where('user_id',Auth::id())->get();
-            return view('scraper::index', compact('user_events'));
+            return view('scraper::index', compact('user_events', 'workshop_config'));
         } else {
             return view('scraper::enter_affiliate_number');
         }
@@ -201,15 +202,15 @@ class ScraperController extends Controller
             $lists = $this->scrape_imf_home();
 
             if ($lists[0]['link'] === false)
-                throw new Exception("We can't connect to the server at imfreedomworkshop.com. Please try again later");
+                throw new \Exception("We can't connect to the server at imfreedomworkshop.com. Please try again later");
             
             $user_workshop = $this->scraper_repository->where('user_id', Auth::id())->first();
             $workshop_config = $this->scraper_repository->RouteConfig();
             return view('scraper::create', compact('lists', 'workshop_config', 'user_workshop'));
 
         } catch (\Exception $e) {
-            $error = "We can't connect to the server at imfreedomworkshop.com. Please try again.";
-            // $error = $e->getMessage();
+            // $error = "We can't connect to the server at imfreedomworkshop.com. Please try again.";
+            $error = $e->getMessage();
             return redirect('scraper')->with('warning', $error);
         }
         
@@ -225,46 +226,52 @@ class ScraperController extends Controller
 
                 //for value
                 //get the starting position
-                $start = strpos($scrape,'<div class="element-container cf" data-style="" id="le_body_row_4_col_1_el_'.$i.'"><div class="element"> <div class="op-text-block" style="width:100%;text-align: left;"><h4 style="text-align: center;"><strong>') + strlen('<div class="element-container cf" data-style="" id="le_body_row_4_col_1_el_'.$i.'"><div class="element"> <div class="op-text-block" style="width:100%;text-align: left;"><h4 style="text-align: center;"><strong>');
+                $search = strpos($scrape,'<div class="element-container cf" data-style="" id="le_body_row_4_col_1_el_'.$i.'"><div class="element"> <div class="op-text-block" style="width:100%;text-align: left;"><h4 style="text-align: center;"><strong>');
 
-                //remove the string before the starting
-                $substr_result = substr($scrape, $start);
-                //get the end position
-                $end = strpos($substr_result, '</a>');
-                //get the result
+                if ($search !== false ) {
+                    $start =  $search + strlen('<div class="element-container cf" data-style="" id="le_body_row_4_col_1_el_'.$i.'"><div class="element"> <div class="op-text-block" style="width:100%;text-align: left;"><h4 style="text-align: center;"><strong>');
 
-                $result = substr($scrape, $start, $end);
-                
-                // seperate the link value and display name
-                $start = strpos($result, '>') + 1;    // add 1 to remove '>'
-                $display_date = substr($result, $start);
 
-                $start = strpos($result, '"') + 1;
-                $link = substr($result, $start);
-                $link = strstr($link, '"',true);
+                    //remove the string before the starting
+                    $substr_result = substr($scrape, $start);
+                    //get the end position
+                    $end = strpos($substr_result, '</a>');
+                    //get the result
 
-                //end for value
+                    $result = substr($scrape, $start, $end);
+                    
+                    // seperate the link value and display name
+                    $start = strpos($result, '>') + 1;    // add 1 to remove '>'
+                    $display_date = substr($result, $start);
 
-                //for name
-                $start = strpos($scrape,'<div class="element-container cf" data-style="" id="le_body_row_4_col_2_el_'.$i.'"><div class="element"> <div class="op-text-block" style="width:100%;text-align: left;"><h4 style="text-align: center;">') + strlen('<div class="element-container cf" data-style="" id="le_body_row_4_col_2_el_'.$i.'"><div class="element"> <div class="op-text-block" style="width:100%;text-align: left;"><h4 style="text-align: center;">');
+                    $start = strpos($result, '"') + 1;
+                    $link = substr($result, $start);
+                    $link = strstr($link, '"',true);
 
-                //remove the string before the starting
-                $substr_result = substr($scrape, $start);
-                //get the end position
-                $end = strpos($substr_result, '</a>');
-                //get the result
+                    //end for value
 
-                $result = substr($scrape, $start, $end);
-                
-                // seperate the link value and display name
-                $start = strpos($result, '>') + 1;    // add 1 to remove '>'
-                $display_name = substr($result, $start);
-                //end for name
+                    //for name
+                    $start = strpos($scrape,'<div class="element-container cf" data-style="" id="le_body_row_4_col_2_el_'.$i.'"><div class="element"> <div class="op-text-block" style="width:100%;text-align: left;"><h4 style="text-align: center;">') + strlen('<div class="element-container cf" data-style="" id="le_body_row_4_col_2_el_'.$i.'"><div class="element"> <div class="op-text-block" style="width:100%;text-align: left;"><h4 style="text-align: center;">');
 
-                //save to array
-                $list[] = compact('link', 'display_name', 'display_date');
+                    //remove the string before the starting
+                    $substr_result = substr($scrape, $start);
+                    //get the end position
+                    $end = strpos($substr_result, '</a>');
+                    //get the result
+
+                    $result = substr($scrape, $start, $end);
+                    
+                    // seperate the link value and display name
+                    $start = strpos($result, '>') + 1;    // add 1 to remove '>'
+                    $display_name = substr($result, $start);
+                    //end for name
+
+                    //save to array
+                    $list[] = compact('link', 'display_name', 'display_date');
+                }
                 
             }
+            
             return $list;
         } catch (\Exception $e) {
             throw $e;
@@ -328,5 +335,23 @@ class ScraperController extends Controller
     {
 
         return view('scraper::view');
+    }
+
+    public function getEvent($id)
+    {
+        $data = [];
+        $event_data = $this->scraper_repository->find($id);
+        $other_data = json_decode($event_data->other_data);
+        $html = '';
+        $counter = 1;
+        // dd($other_data);
+        foreach ($other_data[0] as $key => $value) {
+            $html .= '<strong>' . $value[2] . '</strong> <br>';
+            $html .= '<input type="radio" name="time" > ' . $value[0] . '&nbsp;' . '&nbsp;'; 
+            $html .= '<input type="radio" name="time" > ' . $value[1];
+            $html .= '<br> <br>';
+            $counter++;
+        }
+        return compact('html');
     }
 }

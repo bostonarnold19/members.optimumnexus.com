@@ -10,5 +10,3 @@
 <link href="{{ asset('lib/datatables/dataTables.bootstrap4.css') }}" rel="stylesheet">
 <link href="{{ asset('css/sb-admin.css') }}" rel="stylesheet">
 <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-<!-- SweetAlert -->
-<link rel="stylesheet" href="{{asset('/css/sweetalert.css')}}">

@@ -90,12 +90,13 @@
                   '</tr>'
                 );
                 var event_datas = [];
+                var date_values = [];
+                var final_values = [];
                 $.each($(".group-column"), function(index, value) {
-                  
                   var event_data = [];
-                  event_data.push(value.firstElementChild.children[1].children[0].innerText);
-                  event_data.push(value.firstElementChild.children[1].children[1].innerText);
-                  event_data.push(value.children[1].innerText);
+                  event_data.push(value.firstElementChild.children[1].children[0].innerText); //time 1
+                  event_data.push(value.firstElementChild.children[1].children[1].innerText); //time 2
+                  event_data.push(value.children[1].innerText); //Other info
                   event_datas.push(event_data);
                   $("#event_schedule").append(
                     '<tr>'+
@@ -104,9 +105,20 @@
                     '</tr>'
                   );
                 });
-                $("#event_data").val(JSON.stringify(event_datas));
+                // Get time value
+                $.each($('input[name="time"]'), function(index, value) {
+                  date_values.push(value.value);
+                });
+                // put in array
+                final_values.push(event_datas);
+                final_values.push(date_values);
+                final_values.push($('input[name="tags"]').val());
+
+                $("#event_data").val(JSON.stringify(final_values));
+                
                 $('.loader-image-bar').addClass('hide');
                 $("#btn-save-workshop").prop("disabled", false);
+                
               }, 2000)
             }
           });

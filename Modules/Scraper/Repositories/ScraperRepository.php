@@ -15,7 +15,8 @@ class ScraperRepository extends AbstractEloquentRepository implements ScraperRep
             'destroy' => route('scraper.destroy', '@id'),
             'index' => route('scraper.index'),
             'scrape' => route('scraper.scrape'),
-            'store_event' => route('scraper.store.event')
+            'store_event' => route('scraper.store.event'),
+            'get_event' => route('scraper.get.event', '@id'),
         ]);
     }
 }
