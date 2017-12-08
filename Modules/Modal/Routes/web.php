@@ -7,6 +7,12 @@ Route::group(['middleware' => 'web', 'prefix' => 'client', 'namespace' => 'Modul
             'as' => 'get.clients.index',
         ]);
     });
+    Route::group(['middleware' => 'subscription.modal'], function () {
+        Route::get('/settings', [
+            'uses' => 'UserClientController@settings',
+            'as' => 'get.clients.settings',
+        ]);
+    });
 });
 
 Route::group(['middleware' => 'api', 'prefix' => 'api/client', 'namespace' => 'Modules\Modal\Http\Controllers'], function () {

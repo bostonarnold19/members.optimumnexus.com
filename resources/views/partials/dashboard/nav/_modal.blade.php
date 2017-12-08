@@ -5,11 +5,18 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarResponsive">
     <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-      <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
+      <li class="nav-item active {{ Request::url('/client') === "/client" ? 'active' : '' }}" data-toggle="tooltip" data-placement="right" title="Dashboard">
         <a class="nav-link" href="{{ url('/client') }}">
           <i class="fa fa-fw fa-dashboard"></i>
           <span class="nav-link-text">
-          Dashboard</span>
+          Clients</span>
+        </a>
+      </li>
+      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Settings">
+        <a class="nav-link" href="{{ url('/client/settings') }}">
+          <i class="fa fa-fw fa-wrench"></i>
+          <span class="nav-link-text">
+          Settings</span>
         </a>
       </li>
     </ul>

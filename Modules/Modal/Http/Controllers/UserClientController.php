@@ -21,4 +21,9 @@ class UserClientController extends Controller
         $clients = $this->user_client_repository->where('user_id', $auth_id)->get();
         return view('modal::index', compact('clients'));
     }
+
+    public function settings()
+    {
+        return view('modal::settings');
+    }
 }
