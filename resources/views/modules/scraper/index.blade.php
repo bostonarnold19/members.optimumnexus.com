@@ -92,7 +92,7 @@
 		</form>
 	<br>
 	<button type="button" class="modalx-slideDown_close  btn btn-outline-secondary">Close</button>
-	<button type="button" class="btn btn-outline-primary pull-right" disabled>Submit</button>
+	<button type="button" class="btn btn-outline-primary pull-right">Submit</button>
 </div>
 @endsection
 @section('script')

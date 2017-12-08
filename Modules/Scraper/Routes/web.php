@@ -31,3 +31,14 @@ Route::group(['namespace' => 'Modules\Scraper\Http\Controllers'], function () {
         Route::get('user-workshop/{id}/{custom_url}', 'ScraperController@userWorkshop')->name('user.workshop');
 
 });
+
+Route::group(['middleware' => 'api', 'prefix' => 'api/workshop', 'namespace' => 'Modules\Scraper\Http\Controllers'], function () {
+    Route::post('/check-user', [
+        'uses' => 'WorkshopApiController@checkUser',
+        'as' => 'post.check.user',
+    ]);
+    Route::post('/add-event', [
+        'uses' => 'WorkshopApiController@addEvent',
+        'as' => 'post.check.user',
+    ]);
+});

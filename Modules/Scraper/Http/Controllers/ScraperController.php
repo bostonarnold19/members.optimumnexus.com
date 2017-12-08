@@ -343,14 +343,30 @@ class ScraperController extends Controller
         $event_data = $this->scraper_repository->find($id);
         $other_data = json_decode($event_data->other_data);
         $html = '';
-        $counter = 1;
+        $counter = 0;
+        $html_data = $other_data[0];
+        $radio_values = $other_data[1];
+        $tag_value = $other_data[2];
         // dd($other_data);
-        foreach ($other_data[0] as $key => $value) {
-            $html .= '<strong>' . $value[2] . '</strong> <br>';
-            $html .= '<input type="radio" name="time" > ' . $value[0] . '&nbsp;' . '&nbsp;'; 
-            $html .= '<input type="radio" name="time" > ' . $value[1];
-            $html .= '<br> <br>';
-            $counter++;
+        foreach ($html_data as $key => $value) {
+            $html .= '<div class="form-group row">';
+              $html .= '<div class="col-12">';
+                $html .= '<p><em>' . preg_replace('/\s\s+/', ' ', $value[2]) . '</em></p>';
+                $html .= '<div class="form-check">';
+                  $html .= '<label class="form-check-label">';
+                    $html .= '<input class="form-check-input" type="radio" value="'.$radio_values[$counter].'" name="time">';
+                    $html .= $value[0];
+                  $html .= '</label>';
+                $html .= '</div>';
+                $html .= '<div class="form-check">';
+                  $html .= '<label class="form-check-label">';
+                    $html .= '<input class="form-check-input" type="radio" value="'.$radio_values[$counter+1].'" name="time">';
+                    $html .=  $value[1];
+                  $html .= '</label>';
+                $html .= '</div>';
+              $html .= '</div>';
+            $html .= '</div>';
+            $counter+=2;
         }
         return compact('html');
     }
