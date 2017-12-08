@@ -165,6 +165,9 @@ $email = "admin@admin.com";
 ?>
 
                         <div class="panel panel-default" id="modal">
+   <script src="{{ asset('js/modalx.js') }}"></script>
+<link href="{{ asset('css/modalx.css') }}" rel="stylesheet">
+
                              <client-modal v-bind:email="email"></client-modal>
 
                            <div class="panel-body">
