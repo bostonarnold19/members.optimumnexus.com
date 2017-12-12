@@ -37,8 +37,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'api/workshop', 'namespace' => 
         'uses' => 'WorkshopApiController@checkUser',
         'as' => 'post.check.user',
     ]);
-    Route::post('/add-event', [
-        'uses' => 'WorkshopApiController@addEvent',
+    Route::post('/add-attendee', [
+        'uses' => 'WorkshopApiController@addEventAttendee',
         'as' => 'post.check.user',
     ]);
 });

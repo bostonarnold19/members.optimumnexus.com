@@ -4,7 +4,9 @@ namespace Modules\Scraper\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Modules\Scraper\Entities\Scraper;
+use Modules\Scraper\Entities\WorkshopEventAttendee;
 use Modules\Scraper\Repositories\ScraperRepository;
+use Modules\Scraper\Repositories\WorkshopEventAttendeeRepository;
 
 class ScraperServiceProvider extends ServiceProvider
 {
@@ -34,6 +36,9 @@ class ScraperServiceProvider extends ServiceProvider
     {
         $this->app->bind('Modules\Scraper\Interfaces\ScraperRepositoryInterface', function ($app) {
             return new ScraperRepository(new Scraper());
+        });
+        $this->app->bind('Modules\Scraper\Interfaces\WorkshopEventAttendeeRepositoryInterface', function ($app) {
+            return new WorkshopEventAttendeeRepository(new WorkshopEventAttendee());
         });
     }
 

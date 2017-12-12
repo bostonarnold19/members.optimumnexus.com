@@ -23,6 +23,7 @@ class UsersTableSeeder extends Seeder
         $admin->email = 'admin@admin.com';
         $admin->status = 'active';
         $admin->password = bcrypt('admin');
+        $admin->api_token = str_random(60);
         $admin->save();
 
         $admin->roles()->attach($role_admin);
