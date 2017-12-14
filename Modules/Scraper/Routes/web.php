@@ -20,7 +20,7 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Modules\Scraper\H
         Route::get('create-event', 'ScraperController@createEvent')->name('scraper.create.event');
         Route::post('scrape-page', 'ScraperController@scrapeSelected')->name('scraper.scrape');
         Route::post('store-event', 'ScraperController@storeEvent')->name('scraper.store.event');
-        Route::get('view-event', 'ScraperController@eventAttendees')->name('view.event');
+        Route::get('view-event/{id}', 'ScraperController@eventAttendees')->name('view.event');
         Route::get('get-event/{id}', 'ScraperController@getEvent')->name('scraper.get.event');
     });
 

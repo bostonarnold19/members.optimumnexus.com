@@ -121,7 +121,6 @@
        	});
        	$(".btn-modal").on('click', function () {
        		
-       		console.log('asd');
 	        viewTab.find('.tab-content').append(loader_image_bar_obj[0].outerHTML);
 	        viewTab.find('.loader-image-bar').removeClass('hide');
 
@@ -157,6 +156,63 @@
 	            $('.loader-image-bar').addClass('hide');
 	          }
 	        });
-	      });
+	    });
+
+	    $('.delete').on('click', function () {
+	    	viewTab.find('.tab-content').append(loader_image_bar_obj[0].outerHTML);
+	        viewTab.find('.loader-image-bar').removeClass('hide');
+	        var id = $(this).data('id');
+	    	swal({
+			  title: "Are you sure?",
+			  text: "Once deleted, you will not be able to recover this event!",
+			  icon: "warning",
+			  buttons: true,
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			  if (willDelete) {
+			  	var route = workshop_config.destroy.replace('@id', id);
+		        $.ajax({
+		          type: 'DELETE',
+		          url: route,
+		          cache: false,
+		          dataType: 'json',
+		          error: function (jqXHR, textStatus, errorThrown) {
+		            $('.loader-image-bar').addClass('hide');
+		            if (textStatus != 'error')
+		                  return;
+
+		                if (errorThrown == 'Unprocessable Entity'){
+
+		                  var responseJSON = jqXHR.responseJSON;
+
+		                  try {
+		                    swal("Oops! Something went wrong", responseJSON[Object.keys(responseJSON)[0]][0], "error");
+		                    return;
+		                  } catch (e) {
+		                    // do nothing
+		                  }
+		                }
+
+		                swal("Oops! Something went wrong", 'Failed to delete event.', "error");
+		          },
+
+		          success: function (data) {
+		            $('.loader-image-bar').addClass('hide');
+		            if (typeof data.error_message !== 'undefined' && data.error_message) {
+			          swal("Oops! Something went wrong", data.error_message, "error");
+			          return;
+			        }
+				    swal("Poof! Your event has been deleted!", {
+				      icon: "success",
+				    });
+				    setTimeout(function(){ location.reload(); }, 1000);
+		          }
+		        });
+			  } else {
+			    swal("Your event is safe!");
+			  }
+			});
+	    });
     </script>
 @endsection

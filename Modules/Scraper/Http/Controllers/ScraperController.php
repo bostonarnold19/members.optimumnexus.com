@@ -8,17 +8,20 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Scraper\Interfaces\ScraperRepositoryInterface;
 use Modules\User\Interfaces\UserRepositoryInterface;
+use Modules\Scraper\Interfaces\WorkshopEventAttendeeRepositoryInterface;
 
 class ScraperController extends Controller
 {
 
     protected $scraper_repository;
     protected $user_repository;
+    protected $workshop_event_attendee_repository;
 
-    public function __construct(ScraperRepositoryInterface $scraper_repository, UserRepositoryInterface $user_repository)
+    public function __construct(ScraperRepositoryInterface $scraper_repository, UserRepositoryInterface $user_repository, WorkshopEventAttendeeRepositoryInterface $workshop_event_attendee_repository)
     {
         $this->scraper_repository = $scraper_repository;
         $this->user_repository = $user_repository;
+        $this->workshop_event_attendee_repository = $workshop_event_attendee_repository;
     }
 
     /**
@@ -54,27 +57,6 @@ class ScraperController extends Controller
     public function store(Request $request)
     {
 
-        try {
-
-            $exist = $this->checkIfExists($request);
-
-            if ($exist) {
-                throw new \Exception("Custom URL is already taken");
-            }
-
-            \DB::beginTransaction();
-
-            $workshop_data = $request->all();
-            $workshop_data['user_id'] = Auth::id();
-
-            $this->scraper_repository->save($workshop_data);
-            \DB::commit();
-            $msg = 'Save success.';
-        } catch (\Exception $e) {
-            \DB::rollBack();
-            $error_message = $e->getMessage();
-        }
-        return compact('error_message', 'msg');
     }
 
     /**
@@ -102,32 +84,29 @@ class ScraperController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            $exist = $this->checkIfExists($request);
-
-            if ($exist && $exist->id != $id) {
-                throw new \Exception("Custom URL is already taken");
-            }
-
-            \DB::beginTransaction();
-            $data = $request->all();
-            $this->scraper_repository->update($id, $data);
-            $msg = 'Update success.';
-            \DB::commit();
-        } catch (\Exception $e) {
-            \DB::rollBack();
-            $error_message = $e->getMessage();
-
-        }
-        return compact('error_message', 'msg');
+    
     }
 
     /**
      * Remove the specified resource from storage.
      * @return Response
      */
-    public function destroy()
+    public function destroy($id)
     {
+        try {
+            \DB::beginTransaction();
+            $event = $this->scraper_repository->where('user_id', Auth::id())->where('id', $id)->first();
+            if ($event) {
+                $this->scraper_repository->delete($id);
+            } else {
+                throw new \Exception("You cannot delete this event.");
+            }
+            \DB::commit();
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            $error_message = $e->getMessage();
+        }
+        return compact('error_message', 'msg');
     }
 
     /**
@@ -140,45 +119,6 @@ class ScraperController extends Controller
     {
         return $this->scraper_repository->where('custom_url', $request->custom_url)->first();
 
-    }
-
-    public function userWorkshop($user_workshop_id, $custom_url)
-    {
-        $id = $user_workshop_id;
-        $page_scrape = $this->scraper_repository->find($id);
-
-        //Scrape
-        $phonevalue = 'value="' . $page_scrape->phone . '" ';
-
-        $addy1value = 'value="' . $page_scrape->address_1 . '" ';
-
-        $cityvalue = 'value="' . $page_scrape->city . '" ';
-
-        $zipvalue = 'value="' . $page_scrape->zip_code . '" ';
-
-        $html = file_get_contents($page_scrape->imfurl);
-
-        // set value of phone input
-        $offsetofphone = strpos($html, 'placeholder="Enter your phone number"');
-
-        $html2 = substr_replace($html, $phonevalue, $offsetofphone, 0);
-
-        // set value of addy 1
-        $offsetofaddy1 = strpos($html2, 'placeholder="Enter your address 1"');
-
-        $html3 = substr_replace($html2, $addy1value, $offsetofaddy1, 0);
-
-        // set value of city
-        $offsetofcity = strpos($html3, 'placeholder="Enter your city "');
-
-        $html4 = substr_replace($html3, $cityvalue, $offsetofcity, 0);
-
-        // set value of zip code
-        $offsetofzip = strpos($html4, 'placeholder="Enter your zip "');
-
-        $html5 = substr_replace($html4, $zipvalue, $offsetofzip, 0);
-
-        echo $html5;
     }
 
     public function saveAffiliateNumber(Request $request)
@@ -222,7 +162,7 @@ class ScraperController extends Controller
             $scrape = file_get_contents('http://imfreedomworkshop.com/');
             
             $list = [];
-            for ($i=3; $i < 13; $i++) { 
+            for ($i=3; $i < 15; $i++) { 
 
                 //for value
                 //get the starting position
@@ -251,19 +191,24 @@ class ScraperController extends Controller
                     //end for value
 
                     //for name
-                    $start = strpos($scrape,'<div class="element-container cf" data-style="" id="le_body_row_4_col_2_el_'.$i.'"><div class="element"> <div class="op-text-block" style="width:100%;text-align: left;"><h4 style="text-align: center;">') + strlen('<div class="element-container cf" data-style="" id="le_body_row_4_col_2_el_'.$i.'"><div class="element"> <div class="op-text-block" style="width:100%;text-align: left;"><h4 style="text-align: center;">');
+                    $start = strpos($scrape,'<div class="element-container cf" data-style="" id="le_body_row_4_col_2_el_'.$i.'"><div class="element"> <div class="op-text-block" style="width:100%;text-align: left;">') + strlen('<div class="element-container cf" data-style="" id="le_body_row_4_col_2_el_'.$i.'"><div class="element"> <div class="op-text-block" style="width:100%;text-align: left;">');
 
                     //remove the string before the starting
                     $substr_result = substr($scrape, $start);
+
+                    $new_start = strpos($substr_result, '<a ') + strlen('<a ');
+                    $substr_result = substr($substr_result, $new_start);
+
                     //get the end position
                     $end = strpos($substr_result, '</a>');
-                    //get the result
 
-                    $result = substr($scrape, $start, $end);
+                    //get the result
+                    $result = substr($scrape, $start+$new_start, $end);
                     
                     // seperate the link value and display name
                     $start = strpos($result, '>') + 1;    // add 1 to remove '>'
-                    $display_name = substr($result, $start);
+                    $display_name = strip_tags(substr($result, $start));
+
                     //end for name
 
                     //save to array
@@ -331,10 +276,15 @@ class ScraperController extends Controller
         return compact('error_message', 'msg');
     }
 
-    public function eventAttendees()
+    public function eventAttendees($id)
     {
-
-        return view('scraper::view');
+        $event = $this->scraper_repository->where('user_id', Auth::id())->where('id', $id)->first();
+        if ($event) {
+            $attendees = $this->workshop_event_attendee_repository->where('event_id', $id)->get();
+            return view('scraper::view', compact('attendees'));
+        } else {
+            return redirect('scraper')->with('error', 'You cannot view this event.');
+        }
     }
 
     public function getEvent($id)

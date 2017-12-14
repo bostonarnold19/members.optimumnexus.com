@@ -6,5 +6,6 @@
 <script src="{{ asset('lib/datatables/jquery.dataTables.js') }}"></script>
 <script src="{{ asset('lib/datatables/dataTables.bootstrap4.js') }}"></script>
 <script src="{{ asset('js/sb-admin.min.js') }}"></script>
+<script src="{{ asset('js/main.js') }}"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.7.2/parsley.min.js" type="text/javascript"></script>

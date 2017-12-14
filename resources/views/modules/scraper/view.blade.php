@@ -17,7 +17,7 @@
 		        <tr>
 		            <th width="40%">Name</th>
 		            <th width="20%">Time</th>
-		            <th width="40%">Date & Location</th>
+		            <th width="40%">Date</th>
 		            
 		        </tr>
 		    </thead>
@@ -29,16 +29,18 @@
 		        </tr>
 		    </tfoot>
 		    <tbody>
-		    	<tr>
-			        <td>Juan Dela Cruz</td>
-			        <td>12:30pm</td>
-			        <td>Tuesday, Nov 28, 2017 heraton Melbourne Hotel 27 Little Collins Street Melbourne, VIC 3000</td>
-			    </tr>
-			    <tr>
-			        <td>Jon Doe</td>
-			        <td>6:00pm</td>
-			        <td>Tuesday, Nov 28, 2017 heraton Melbourne Hotel 27 Little Collins Street Melbourne, VIC 3000</td>
-			    </tr>
+		    	@if($attendees)
+		    		@foreach($attendees as $attendee)
+		    			<?php
+		    				$date_time = explode(';',$attendee->time);
+		    			?>
+		    			<tr>
+		    				<td>{{$attendee->first_name . ' ' . $attendee->last_name}}</td>
+		    				<td>{{$date_time[0]}}</td>
+		    				<td>{{$date_time[1]}}</td>
+		    			</tr>
+		    		@endforeach
+		    	@endif
 		    </tbody>
 		</table>
 	</div>

@@ -26,4 +26,9 @@ class Scraper extends Model
 
     ];
 
+    public function attendees()
+    {
+        return $this->hasMany('Modules\Scraper\Entities\WorkshopEventAttendee', 'event_id');
+    }
+
 }
