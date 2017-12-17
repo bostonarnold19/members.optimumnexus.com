@@ -92,15 +92,23 @@
                 var event_datas = [];
                 var date_values = [];
                 var final_values = [];
+                var display_time = '';
                 $.each($(".group-column"), function(index, value) {
                   var event_data = [];
+                  // console.log(value.firstElementChild.children[1].children);
                   event_data.push(value.firstElementChild.children[1].children[0].innerText); //time 1
-                  event_data.push(value.firstElementChild.children[1].children[1].innerText); //time 2
+
+                  if (typeof value.firstElementChild.children[1].children[1] !== 'undefined') {
+                    display_time = value.firstElementChild.children[1].children[1].innerText;
+                  } else {
+                    display_time = 'N/A';
+                  }
+                   event_data.push(display_time); //time 2
                   event_data.push(value.children[1].innerText); //Other info
                   event_datas.push(event_data);
                   $("#event_schedule").append(
                     '<tr>'+
-                      '<td>'+value.firstElementChild.children[1].children[0].innerText+'<br>'+value.firstElementChild.children[1].children[1].innerText+'</td>'+
+                      '<td>'+value.firstElementChild.children[1].children[0].innerText+'<br>'+display_time+'</td>'+
                       '<td>'+value.children[1].innerText+'</td>'+
                     '</tr>'
                   );

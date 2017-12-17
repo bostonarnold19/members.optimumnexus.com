@@ -108,7 +108,7 @@ class WorkshopApiController extends Controller
             $status_code    = 500;
             $status         = 'error';
             $message        = 'Internal server error.';
-            $user           = $this->user_repository->where('api_token', $request->api_token)->where('email', $request->email)->first();
+            $user           = $this->user_repository->where('api_token', $request->api_token)->where('email', $request->owner_email)->first();
 
             if ($user) {
 
@@ -118,7 +118,7 @@ class WorkshopApiController extends Controller
                     $data = $request->all();
                     //check if attendee is already have invitation
                     $attendee_event = $this->workshop_event_attendee_repository->where('email', $data['email'])->where('time', $data['time'])->get();
-                    if ($attendee_event) {
+                    if ($attendee_event->count() > 0) {
                         $status         = 'error';
                         $message        = 'You have already register in this event.';
                         $status_code    = 401;
