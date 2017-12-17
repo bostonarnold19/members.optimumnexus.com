@@ -3,6 +3,11 @@
 @section('style')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js">
 <link href="{{ asset('css/modalx.css') }}" rel="stylesheet">
+<style type="text/css">
+  input[type="radio"] {
+      margin-right: 6px;
+  }
+</style>
 @endsection
 @section('content')
 <ol class="breadcrumb">

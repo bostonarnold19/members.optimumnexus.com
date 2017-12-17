@@ -1,5 +1,12 @@
 @extends('layouts.scraper')
 @section('title', 'WorkShop')
+@section('style')
+<style type="text/css">
+  input[type="radio"] {
+      margin-right: 6px;
+  }
+</style>
+@endsection('style')
 @section('content')
 <ol class="breadcrumb">
     <li class="breadcrumb-item">
@@ -24,14 +31,16 @@
       @endforeach
     </select>
   </div>
-  <input type="hidden" id="event_data" data-parsley-required="true" name="event_data">
+  <input type="hidden" id="event_form" data-parsley-required="true" name="event_form">
+  <input type="hidden" id="event_tag" data-parsley-required="true" name="event_tag">
 </form>
-<div id="scrape_result" hidden>
+<h2 class="hide" id="preview-only">Preview Only</h2>
+<div id="scrape_display">
 
 </div>
-<table id="event_schedule" class="table">
+<div id="scrape_data" hidden="">
   
-</table>
+</div>
 <button type="button" id="btn-save-workshop" disabled class="btn btn-primary pull-right">Save</button>
 <br>
 @endsection
@@ -78,56 +87,16 @@
                 swal("Oops! Something went wrong", data.error, "error");
                 return;
               }
-              $("#scrape_result").html('');
-              $("#scrape_result").append(data.result);
+              $('#preview-only').removeClass('hide');
+              $("#scrape_data").html('');
+              $("#scrape_data").append(data.data_result);
 
-              $("#event_schedule").html('');
-              setTimeout(function () {
-                $("#event_schedule").append(
-                  '<tr>'+
-                    '<th width="50%">Time</th>'+
-                    '<th width="50%">Date & Location</th>'+
-                  '</tr>'
-                );
-                var event_datas = [];
-                var date_values = [];
-                var final_values = [];
-                var display_time = '';
-                $.each($(".group-column"), function(index, value) {
-                  var event_data = [];
-                  // console.log(value.firstElementChild.children[1].children);
-                  event_data.push(value.firstElementChild.children[1].children[0].innerText); //time 1
-
-                  if (typeof value.firstElementChild.children[1].children[1] !== 'undefined') {
-                    display_time = value.firstElementChild.children[1].children[1].innerText;
-                  } else {
-                    display_time = 'N/A';
-                  }
-                   event_data.push(display_time); //time 2
-                  event_data.push(value.children[1].innerText); //Other info
-                  event_datas.push(event_data);
-                  $("#event_schedule").append(
-                    '<tr>'+
-                      '<td>'+value.firstElementChild.children[1].children[0].innerText+'<br>'+display_time+'</td>'+
-                      '<td>'+value.children[1].innerText+'</td>'+
-                    '</tr>'
-                  );
-                });
-                // Get time value
-                $.each($('input[name="time"]'), function(index, value) {
-                  date_values.push(value.value);
-                });
-                // put in array
-                final_values.push(event_datas);
-                final_values.push(date_values);
-                final_values.push($('input[name="tags"]').val());
-
-                $("#event_data").val(JSON.stringify(final_values));
-                
-                $('.loader-image-bar').addClass('hide');
-                $("#btn-save-workshop").prop("disabled", false);
-                
-              }, 2000)
+              $("#scrape_display").html('');
+              $("#scrape_display").append(data.display_result);
+              $('.loader-image-bar').addClass('hide');
+              $("#btn-save-workshop").prop("disabled", false);
+              $("#event_form").val(data.display_result);
+              $("#event_tag").val($('input[name="tags"]').val());
             }
           });
       });

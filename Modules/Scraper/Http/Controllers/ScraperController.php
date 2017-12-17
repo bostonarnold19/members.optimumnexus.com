@@ -231,6 +231,7 @@ class ScraperController extends Controller
 
             $scrape = file_get_contents($event_location_date[0]);
 
+            //for getting data
             //get the starting position
             $start = strpos($scrape,'<form id="contactform"');
 
@@ -240,7 +241,24 @@ class ScraperController extends Controller
             $end = strpos($substr_result, '</form>');
             //get the result
 
-            $result = substr($scrape, $start, $end);
+            $data_result = substr($scrape, $start, $end);
+
+            //for display
+            //get the starting position
+            $start = strpos($scrape,'<form id="contactform"');
+
+            //remove the string before the starting
+            $substr_result = substr($scrape, $start);
+            //get the end position
+            $end = strpos($substr_result, '<label for="first name');
+            //get the result
+
+            $display_result = substr($scrape, $start, $end);
+            $display_result .= '</div>';
+            $display_result .= '</div>';
+            $display_result = str_replace('group-column','form-group row',$display_result);
+            $display_result = str_replace('formcolumn','col-sm-6',$display_result);
+            $display_result = str_replace('form id','div id',$display_result);
             
         
         }catch (\Exception $e) {
@@ -248,7 +266,7 @@ class ScraperController extends Controller
             // $error = $e->getMessage();
         }
 
-        return compact('error', 'result');
+        return compact('error', 'data_result', 'display_result');
         
     }
 
@@ -260,10 +278,14 @@ class ScraperController extends Controller
             \DB::beginTransaction();
 
             $data = $request->all();
+            $other_data = [
+                'form'  => $data['event_form'],
+                'tags'  => $data['event_tag']
+            ];
             $user_event = [];
             $user_event['user_id'] =  Auth::id();
             $user_event['event_name'] =  $data['event_name'];
-            $user_event['other_data'] =  $data['event_data'];
+            $user_event['other_data'] =  json_encode($other_data);
             $user_event['event_location_date'] =  $data['event_location_date'];
             $this->scraper_repository->save($user_event);
             \DB::commit();
@@ -292,32 +314,8 @@ class ScraperController extends Controller
         $data = [];
         $event_data = $this->scraper_repository->find($id);
         $other_data = json_decode($event_data->other_data);
-        $html = '';
+        $html = $other_data->form;
         $counter = 0;
-        $html_data = $other_data[0];
-        $radio_values = $other_data[1];
-        $tag_value = $other_data[2];
-        // dd($other_data);
-        foreach ($html_data as $key => $value) {
-            $html .= '<div class="form-group row">';
-              $html .= '<div class="col-12">';
-                $html .= '<p><em>' . preg_replace('/\s\s+/', ' ', $value[2]) . '</em></p>';
-                $html .= '<div class="form-check">';
-                  $html .= '<label class="form-check-label">';
-                    $html .= '<input class="form-check-input" type="radio" value="'.$radio_values[$counter].'" name="time">';
-                    $html .= $value[0];
-                  $html .= '</label>';
-                $html .= '</div>';
-                $html .= '<div class="form-check">';
-                  $html .= '<label class="form-check-label">';
-                    $html .= '<input class="form-check-input" type="radio" value="'.$radio_values[$counter+1].'" name="time">';
-                    $html .=  $value[1];
-                  $html .= '</label>';
-                $html .= '</div>';
-              $html .= '</div>';
-            $html .= '</div>';
-            $counter+=2;
-        }
         return compact('html');
     }
 }

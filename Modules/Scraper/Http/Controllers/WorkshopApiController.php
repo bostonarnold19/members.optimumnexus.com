@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Modules\Scraper\Interfaces\ScraperRepositoryInterface;
 use Modules\Scraper\Interfaces\WorkshopEventAttendeeRepositoryInterface;
 use Modules\User\Interfaces\UserRepositoryInterface;
+use GuzzleHttp\Client;  
 
 
 class WorkshopApiController extends Controller
@@ -48,36 +49,12 @@ class WorkshopApiController extends Controller
                     $data['subscription_details'] = $subscription_details->toArray();
                     $user_events = $this->scraper_repository->where('user_id',$user->id)->get();
                     foreach ($user_events as $key => $user_event) {
-                        $html = '';
-                        $counter = 0;
                         $other_data = json_decode($user_event->other_data);
-                        $html_data = $other_data[0];
-                        $radio_values = $other_data[1];
                         $event_data[$key]['event_id'] = $user_event->id;
                         $event_data[$key]['event_name'] = $user_event->event_name;
                         $event_data[$key]['event_location_date'] = $user_event->event_location_date;
-                        $event_data[$key]['tags'] = $other_data[2];
-                        foreach ($html_data as $key_2 => $value) {
-                            $html .= '<div class="form-group row">';
-                              $html .= '<div class="col-12">';
-                                $html .= '<p><em>' . preg_replace('/\s\s+/', ' ', $value[2]) . '</em></p>';
-                                $html .= '<div class="form-check">';
-                                  $html .= '<label class="form-check-label">';
-                                    $html .= '<input class="form-check-input" type="radio" value="'.$radio_values[$counter].'" name="time" required>';
-                                    $html .= $value[0];
-                                  $html .= '</label>';
-                                $html .= '</div>';
-                                $html .= '<div class="form-check">';
-                                  $html .= '<label class="form-check-label">';
-                                    $html .= '<input class="form-check-input" type="radio" value="'.$radio_values[$counter+1].'" name="time" required>';
-                                    $html .=  $value[1];
-                                  $html .= '</label>';
-                                $html .= '</div>';
-                              $html .= '</div>';
-                            $html .= '</div>';
-                            $counter+=2;
-                        }
-                        $event_data[$key]['html'] = $html;
+                        $event_data[$key]['tags'] = $other_data->tags;
+                        $event_data[$key]['html'] = $other_data->form;
                     }
                     $data['event_data'] = $event_data;
                     return response()->json([
@@ -124,6 +101,29 @@ class WorkshopApiController extends Controller
                         $status_code    = 401;
                     } else {
 
+                        //send to IMF via guzzle
+                        $client = new Client();
+                        $result = $client->post('http://imfreedomworkshop.com/wp-content/plugins/mobe-forms/process.v2.php', [
+                            'form_params' => [
+                                'time'          => $data['time'],
+                                'firstname'     => $data['first_name'],
+                                'lastname'      => $data['last_name'],
+                                'phone'         => $data['phone'],
+                                'email'         => $data['email'],
+                                'address1'      => $data['address1'],
+                                'address2'      => $data['address2'],
+                                'city'          => $data['city'],
+                                'tags'          => $data['tags'],
+                                'state'         => 'N/A',
+                                'zip'           => $data['zip'],
+                                'thankyouurl'   => 'Thankyou',
+                                'hearabout'     => 'Internet',
+                                'hoaid_520'     => $user->scraper_affiliate_number, //affiliate number
+                                'ho_subid1_575' => 'undefined',
+                                'ho_subid2_579' => 'undefined'
+
+                            ]
+                        ]);
                         $this->workshop_event_attendee_repository->storeEventAttendee($data);
                         $status         = 'data';
                         $message        = 'Registration complete.';
