@@ -124,10 +124,16 @@ class WorkshopApiController extends Controller
 
                             ]
                         ]);
-                        $this->workshop_event_attendee_repository->storeEventAttendee($data);
-                        $status         = 'data';
-                        $message        = 'Registration complete.';
-                        $status_code    = 200;
+
+                        if ($result->getStatusCode() === 200) {
+                            $this->workshop_event_attendee_repository->storeEventAttendee($data);
+                            $status         = 'data';
+                            $message        = 'Registration complete.';
+                            $status_code    = 200;
+                        } else {
+                             $message = 'Internal server error.';
+                        }
+                        
                     }
 
                 }else {
