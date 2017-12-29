@@ -131,7 +131,8 @@ class WorkshopApiController extends Controller
                             $message        = 'Registration complete.';
                             $status_code    = 200;
                         } else {
-                             $message = 'Internal server error.';
+                            $status         = 'error';
+                            $message = 'Internal server error.';
                         }
                         
                     }
