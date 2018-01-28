@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => 'web', 'prefix' => 'client', 'namespace' => 'Modules\Modal\Http\Controllers'], function () {
+Route::group(['middleware' => 'web', 'prefix' => 'sw2', 'namespace' => 'Modules\Modal\Http\Controllers'], function () {
     Route::group(['middleware' => 'subscription.modal'], function () {
         Route::get('/', [
             'uses' => 'UserClientController@index',
@@ -15,7 +15,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'client', 'namespace' => 'Modul
     });
 });
 
-Route::group(['middleware' => 'api', 'prefix' => 'api/client', 'namespace' => 'Modules\Modal\Http\Controllers'], function () {
+Route::group(['middleware' => 'api', 'prefix' => 'api/sw2', 'namespace' => 'Modules\Modal\Http\Controllers'], function () {
     Route::post('/register', [
         'uses' => 'UserClientApiController@registerClient',
         'as' => 'post.register.client',
