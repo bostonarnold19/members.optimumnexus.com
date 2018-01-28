@@ -5,15 +5,15 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarResponsive">
     <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-      <li class="nav-item active {{ Request::url('/client') === "/client" ? 'active' : '' }}" data-toggle="tooltip" data-placement="right" title="Dashboard">
-        <a class="nav-link" href="{{ url('/client') }}">
+      <li class="nav-item active {{ Request::url('/sw2') === "/sw2" ? 'active' : '' }}" data-toggle="tooltip" data-placement="right" title="Dashboard">
+        <a class="nav-link" href="{{ url('/sw2') }}">
           <i class="fa fa-fw fa-dashboard"></i>
           <span class="nav-link-text">
           Clients</span>
         </a>
       </li>
       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Settings">
-        <a class="nav-link" href="{{ url('/client/settings') }}">
+        <a class="nav-link" href="{{ url('/sw2/settings') }}">
           <i class="fa fa-fw fa-wrench"></i>
           <span class="nav-link-text">
           Settings</span>
@@ -35,11 +35,11 @@
         <div class="dropdown-menu" aria-labelledby="messagesDropdown"  style="  right: 0; left: auto;" >
           <h6 class="dropdown-header">Products:</h6>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item small" href="{{ url('/client')}}">
+          <a class="dropdown-item small" href="{{ url('/sw2')}}">
             <b>Modal</b>
           </a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item small" href="{{ url('/scraper') }}">
+          <a class="dropdown-item small" href="{{ url('/om') }}">
             <b>Scraper</b>
           </a>
           <div class="dropdown-divider"></div>

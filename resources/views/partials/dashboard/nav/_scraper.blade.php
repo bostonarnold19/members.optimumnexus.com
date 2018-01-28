@@ -6,7 +6,7 @@
   <div class="collapse navbar-collapse" id="navbarResponsive">
     <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
       <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
-        <a class="nav-link" href="{{ url('/scraper') }}">
+        <a class="nav-link" href="{{ url('/om') }}">
           <i class="fa fa-fw fa-dashboard"></i>
           <span class="nav-link-text">
           Scrapper</span>
@@ -28,11 +28,11 @@
         <div class="dropdown-menu" aria-labelledby="messagesDropdown"  style="  right: 0; left: auto;" >
           <h6 class="dropdown-header">Products:</h6>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item small" href="{{ url('/client')}}">
+          <a class="dropdown-item small" href="{{ url('/sw2')}}">
             <b>Modal</b>
           </a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item small" href="{{ url('/scraper') }}">
+          <a class="dropdown-item small" href="{{ url('/om') }}">
             <b>Scraper</b>
           </a>
           <div class="dropdown-divider"></div>

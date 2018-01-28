@@ -15,7 +15,7 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Modules\Scraper\H
 
     Route::group(['middleware' => 'subscription.scraper'], function () {
 
-        Route::resource('scraper', 'ScraperController');
+        Route::resource('om', 'ScraperController');
         Route::post('scraper-affiliate-number', 'ScraperController@saveAffiliateNumber')->name('scraper.affiliate');
         Route::get('create-event', 'ScraperController@createEvent')->name('scraper.create.event');
         Route::post('scrape-page', 'ScraperController@scrapeSelected')->name('scraper.scrape');
@@ -28,7 +28,7 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Modules\Scraper\H
 
 Route::group(['namespace' => 'Modules\Scraper\Http\Controllers'], function () {
 
-        Route::get('user-workshop/{id}/{custom_url}', 'ScraperController@userWorkshop')->name('user.workshop');
+    Route::get('user-workshop/{id}/{custom_url}', 'ScraperController@userWorkshop')->name('user.workshop');
 
 });
 
