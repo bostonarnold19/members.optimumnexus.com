@@ -6,7 +6,7 @@
     </div>
     <div class="card-body">
         <div class="list-group">
-            <a href="{{ url('/client') }}" class="list-group-item">Modal</a>
+            <a href="{{ url('/sw2') }}" class="list-group-item">Modal</a>
             <a href="{{ url('/scraper')}}" class="list-group-item">Sraper</a>
         </div>
         <hr>
