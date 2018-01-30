@@ -6,8 +6,8 @@
     </div>
     <div class="card-body">
         <div class="list-group">
-            <a href="{{ url('/sw2') }}" class="list-group-item">Modal</a>
-            <a href="{{ url('/om')}}" class="list-group-item">Sraper</a>
+            <a href="{{ url('/sw2') }}" class="list-group-item">Site Wrap 2.0</a>
+            <a href="{{ url('/om')}}" class="list-group-item">Optin Maximizer</a>
         </div>
         <hr>
         <form action="{{ route('logout') }}" method="POST">
