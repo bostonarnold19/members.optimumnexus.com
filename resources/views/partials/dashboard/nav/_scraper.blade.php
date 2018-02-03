@@ -9,7 +9,7 @@
         <a class="nav-link" href="{{ url('/om') }}">
           <i class="fa fa-fw fa-dashboard"></i>
           <span class="nav-link-text">
-          Scrapper</span>
+          Optin Maximizer</span>
         </a>
       </li>
     </ul>
