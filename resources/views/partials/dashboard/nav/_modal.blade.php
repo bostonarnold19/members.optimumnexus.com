@@ -40,7 +40,7 @@
           </a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item small" href="{{ url('/om') }}">
-            <b>Scraper</b>
+            <b>Optin Maximizer</b>
           </a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item small" href="{{ route('get.user.product-list') }}">

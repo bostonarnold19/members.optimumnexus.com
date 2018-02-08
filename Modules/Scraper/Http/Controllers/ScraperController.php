@@ -126,11 +126,11 @@ class ScraperController extends Controller
         $affiliate_number = $this->user_repository->where('scraper_affiliate_number', $request->affiliate_number);
         //check if affiliate # is already exist
         if ($affiliate_number->count() > 0) {
-            return redirect('scraper')->with('error', 'Affiliate number is already taken.');
+            return redirect('om')->with('error', 'Affiliate number is already taken.');
         } else {
             //save affiliate #
             $this->user_repository->update(Auth::id(), ['scraper_affiliate_number' => $request->affiliate_number]);
-            return redirect('scraper')->with('success', 'Affiliate number saved.');
+            return redirect('om')->with('success', 'Affiliate number saved.');
         }
     }
 
@@ -151,7 +151,7 @@ class ScraperController extends Controller
         } catch (\Exception $e) {
             // $error = "We can't connect to the server at imfreedomworkshop.com. Please try again.";
             $error = $e->getMessage();
-            return redirect('scraper')->with('warning', $error);
+            return redirect('om')->with('warning', $error);
         }
         
     }
@@ -305,7 +305,7 @@ class ScraperController extends Controller
             $attendees = $this->workshop_event_attendee_repository->where('event_id', $id)->get();
             return view('scraper::view', compact('attendees'));
         } else {
-            return redirect('scraper')->with('error', 'You cannot view this event.');
+            return redirect('om')->with('error', 'You cannot view this event.');
         }
     }
 
