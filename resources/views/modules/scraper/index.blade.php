@@ -1,5 +1,5 @@
 @extends('layouts.scraper')
-@section('title', 'WorkShop')
+@section('title', 'Optin Maximizer')
 @section('style')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js">
 <link href="{{ asset('css/modalx.css') }}" rel="stylesheet">

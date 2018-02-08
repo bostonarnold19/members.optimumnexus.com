@@ -1,5 +1,5 @@
 @extends('layouts.scraper')
-@section('title', 'WorkShop')
+@section('title', 'Optin Maximizer')
 @section('style')
 <style type="text/css">
   input[type="radio"] {
