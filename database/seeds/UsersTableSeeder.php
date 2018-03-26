@@ -46,5 +46,13 @@ class UsersTableSeeder extends Seeder
         $subscription2->payment_type = 'paid';
         $subscription2->expired_at = $expired_at;
         $subscription2->save();
+
+        $subscription3 = new Subscription();
+        $subscription3->user_id = 1;
+        $subscription3->product_name = 'bagel';
+        $subscription3->status = 'active';
+        $subscription3->payment_type = 'paid';
+        $subscription3->expired_at = $expired_at;
+        $subscription3->save();
     }
 }

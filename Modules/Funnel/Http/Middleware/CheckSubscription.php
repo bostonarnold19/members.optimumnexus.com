@@ -1,0 +1,32 @@
+<?php
+
+namespace Modules\Funnel\Http\Middleware;
+
+use Closure;
+use Modules\User\Interfaces\SubscriptionRepositoryInterface;
+
+class CheckSubscription
+{
+    protected $subscription_repository;
+    protected $auth;
+
+    public function __construct(SubscriptionRepositoryInterface $subscription_repository)
+    {
+        $this->subscription_repository = $subscription_repository;
+        $this->auth = auth()->user();
+    }
+
+    public function handle($request, Closure $next)
+    {
+        $subscription = $this->subscription_repository->where('user_id', $this->auth->id)
+            ->where('status', 'active')
+            ->where('product_name', 'bagel')
+            ->first();
+
+        if (!empty($subscription)) {
+            return $next($request);
+        } else {
+            return abort(403);
+        }
+    }
+}

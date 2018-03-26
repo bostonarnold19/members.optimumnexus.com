@@ -24,6 +24,7 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->register(\Cviebrock\EloquentSluggable\ServiceProvider::class);
         $this->app->register(\Intervention\Image\ImageServiceProvider::class);
         $this->app->register(\Zizaco\Entrust\EntrustServiceProvider::class);
+        $this->app->register(\Laravel\Passport\PassportServiceProvider::class);
     }
 
     public function registerAlias()

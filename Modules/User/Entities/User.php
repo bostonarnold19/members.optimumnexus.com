@@ -4,11 +4,12 @@ namespace Modules\User\Entities;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Authenticatable
 {
-    use EntrustUserTrait, Notifiable;
+    use HasApiTokens, EntrustUserTrait, Notifiable;
 
     public $fillable = [
         'email',
@@ -19,6 +20,7 @@ class User extends Authenticatable
         'profile_picture',
         'scraper_affiliate_number',
         'status',
+        'wp_site',
     ];
 
     protected $hidden = [

@@ -8,6 +8,7 @@
         <div class="list-group">
             <a href="{{ url('/sw2') }}" class="list-group-item">Site Wrap 2.0</a>
             <a href="{{ url('/om')}}" class="list-group-item">Optin Maximizer</a>
+            <a href="{{ url('/bagel')}}" class="list-group-item">Bagel</a>
         </div>
         <hr>
         <form action="{{ route('logout') }}" method="POST">

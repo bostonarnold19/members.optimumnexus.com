@@ -9,13 +9,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Modules\\Core\\": ""
+            "Modules\\Funnel\\": ""
         }
-    },
-    "require": {
-        "cviebrock/eloquent-sluggable": "4.2.1",
-        "intervention/image": "^2.3",
-        "zizaco/entrust": "5.2.x-dev",
-        "laravel/passport": "^3.0"
     }
 }

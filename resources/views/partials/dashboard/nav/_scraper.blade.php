@@ -39,6 +39,10 @@
           <a class="dropdown-item small" href="{{ url('/om') }}">
             <b>Optin Maximizer</b>
           </a>
+                  <div class="dropdown-divider"></div>
+          <a class="dropdown-item small" href="{{ url('/bagel') }}">
+            <b>Bagel</b>
+          </a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item small" href="{{ route('get.user.product-list') }}">
             View all products

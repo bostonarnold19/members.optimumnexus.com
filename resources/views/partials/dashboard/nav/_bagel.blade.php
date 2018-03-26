@@ -1,24 +1,30 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-  <a class="navbar-brand" href="#">Modal Service</a>
+  <a class="navbar-brand" href="#">Bagel</a>
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
   <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarResponsive">
     <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-      <li class="nav-item active {{ Request::url('/sw2') === "/sw2" ? 'active' : '' }}" data-toggle="tooltip" data-placement="right" title="Dashboard">
-        <a class="nav-link" href="{{ url('/sw2') }}">
+       <li class="nav-item {{ Request::is('bagel') == '/bagel' ? 'active' : '' }}" data-toggle="tooltip" data-placement="right" title="Dashboard">
+        <a class="nav-link" href="{{ url('/bagel') }}">
           <i class="fa fa-fw fa-dashboard"></i>
           <span class="nav-link-text">
-          Clients</span>
+          Dashboard</span>
         </a>
       </li>
-      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Settings">
-        <a class="nav-link" href="{{ url('/sw2/settings') }}">
-          <i class="fa fa-fw fa-wrench"></i>
-          <span class="nav-link-text">
-          Settings</span>
-        </a>
-      </li>
+     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Funnels">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-sitemap"></i>
+            <span class="nav-link-text">Funnels</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseMulti">
+            @foreach($funnels as $funnel)
+            <li>
+              <a href="{{ route('funnel.show', $funnel->id) }}">{{ $funnel->title }}</a>
+            </li>
+            @endforeach
+          </ul>
+        </li>
     </ul>
     <ul class="navbar-nav sidenav-toggler">
       <li class="nav-item">
@@ -42,7 +48,7 @@
           <a class="dropdown-item small" href="{{ url('/om') }}">
             <b>Optin Maximizer</b>
           </a>
-                  <div class="dropdown-divider"></div>
+          <div class="dropdown-divider"></div>
           <a class="dropdown-item small" href="{{ url('/bagel') }}">
             <b>Bagel</b>
           </a>
