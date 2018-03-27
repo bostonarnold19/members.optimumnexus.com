@@ -40,6 +40,11 @@ abstract class AbstractEloquentRepository implements EloquentRepositoryInterface
         return $this->model;
     }
 
+    public function create(array $data)
+    {
+        $this->model->create($data);
+    }
+
     public function update($id, array $data)
     {
         $this->model->findOrFail($id)->update($data);
