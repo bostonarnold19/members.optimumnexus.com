@@ -10,14 +10,11 @@
             <div class="modal-body">
                 <form onsubmit="return confirm('Do you want to save this data?');" method="POST" action="{{ route('page.store') }}">
                     {{ csrf_field() }}
-                                <div class="form-group">
-                        <label for="page_id">Page ID</label>
-                        <input id="page_id" type="text" class="form-control" name="page_id" value="{{ old('page_id') }}" required>
-                    </div>
                     <div class="form-group">
-                        <label for="title">Title</label>
-                        <input id="title" type="text" class="form-control" name="title" value="{{ old('title') }}" required>
+                        <label for="link">Link</label>
+                        <input id="link" type="text" class="form-control" name="link" value="{{ old('link') }}" required>
                     </div>
+                    <input type="hidden" name="type" value="external">
                     <div class="form-group">
                         <button type="submit" class="btn btn-success form-control">Save</button>
                     </div>

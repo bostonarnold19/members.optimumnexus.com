@@ -12,6 +12,13 @@
           Dashboard</span>
         </a>
       </li>
+       <li class="nav-item {{ Request::is('category-bagel') == '/category-bagel' ? 'active' : '' }}" data-toggle="tooltip" data-placement="right" title="Dashboard">
+        <a class="nav-link" href="{{route('category-bagel.index')}}">
+          <i class="fa fa-fw fa-tags"></i>
+          <span class="nav-link-text">
+          Category</span>
+        </a>
+      </li>
      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Funnels">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-sitemap"></i>

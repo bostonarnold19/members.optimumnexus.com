@@ -10,7 +10,7 @@ class CoreServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        //
+        $this->registerConfig();
     }
 
     public function register()
@@ -32,5 +32,16 @@ class CoreServiceProvider extends ServiceProvider
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('Image', \Intervention\Image\Facades\Image::class);
         $loader->alias('Entrust', \Zizaco\Entrust\EntrustFacade::class);
+    }
+
+    public function registerConfig()
+    {
+        $this->mergeConfigFrom(
+            __DIR__ . '/../Config/kog3nt.php', 'kog3nt'
+        );
+
+        $this->mergeConfigFrom(
+            __DIR__ . '/../Config/wp_settings.php', 'wp_settings'
+        );
     }
 }

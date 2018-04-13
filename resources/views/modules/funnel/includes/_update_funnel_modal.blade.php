@@ -20,6 +20,15 @@
                         <textarea class="form-control" name="description">{{ $funnel->description }}</textarea>
                     </div>
                     <div class="form-group">
+                        <label>Category</label>
+                        <select required name="category_id" class="form-control">
+                            <option {{ $funnel->category_id == null ? 'selected' : '' }} selected disabled>Select Category</option>
+                            @foreach($categories as $category)
+                            <option {{ $funnel->category_id == $category->id ? 'selected' : '' }}  value="{{ $category->id }}">{{$category->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <button type="submit" class="btn btn-success form-control">Update</button>
                     </div>
                 </form>

@@ -5,29 +5,33 @@ namespace Modules\Funnel\Http\Controllers;
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Request;
+use Modules\Category\Interfaces\CategoryRepositoryInterface;
 use Modules\Funnel\Interfaces\FunnelRepositoryInterface;
 use Modules\Funnel\Interfaces\PageRepositoryInterface;
 
 class FunnelController extends Controller
 {
     protected $funnel_repository;
+    protected $category_repository;
     protected $page_repository;
 
-    public function __construct(FunnelRepositoryInterface $funnel_repository, PageRepositoryInterface $page_repository)
+    public function __construct(FunnelRepositoryInterface $funnel_repository, PageRepositoryInterface $page_repository, CategoryRepositoryInterface $category_repository)
     {
         $this->funnel_repository = $funnel_repository;
         $this->page_repository = $page_repository;
+        $this->category_repository = $category_repository;
     }
 
     public function index()
     {
         $user = auth()->user();
+        $categories = $user->categories;
         if ($user->hasRole('Admin')) {
             $funnels = $this->funnel_repository->all();
         } else {
             $funnels = $this->funnel_repository->where('user_id', $user->id)->get();
         }
-        return view('funnel::index', compact('funnels'));
+        return view('funnel::index', compact('funnels', 'categories'));
     }
 
     public function create()
@@ -57,6 +61,7 @@ class FunnelController extends Controller
     public function show($id)
     {
         $user = auth()->user();
+        $categories = $user->categories;
         if ($user->hasRole('Admin')) {
             $funnels = $this->funnel_repository->all();
         } else {
@@ -78,12 +83,13 @@ class FunnelController extends Controller
         if (empty($funnel)) {
             return abort(404);
         }
-        return view('funnel::show', compact('funnel', 'pages', 'funnel_pages', 'funnels'));
+        return view('funnel::show', compact('funnel', 'pages', 'funnel_pages', 'funnels', 'categories'));
     }
 
     public function edit($id)
     {
         $user = auth()->user();
+        $categories = $user->categories;
         if ($user->hasRole('Admin')) {
             $funnel = $this->funnel_repository->find($id);
         } else {
@@ -95,7 +101,7 @@ class FunnelController extends Controller
         if (empty($funnel)) {
             return abort(404);
         }
-        return view('funnel::edit', compact('funnel'));
+        return view('funnel::edit', compact('funnel', 'categories'));
     }
 
     public function update(Request $request, $id)

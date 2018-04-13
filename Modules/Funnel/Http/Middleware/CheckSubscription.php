@@ -18,11 +18,13 @@ class CheckSubscription
 
     public function handle($request, Closure $next)
     {
+        if ($this->auth->hasRole('Admin')) {
+            return $next($request);
+        }
         $subscription = $this->subscription_repository->where('user_id', $this->auth->id)
             ->where('status', 'active')
             ->where('product_name', 'bagel')
             ->first();
-
         if (!empty($subscription)) {
             return $next($request);
         } else {

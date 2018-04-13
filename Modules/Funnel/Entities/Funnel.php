@@ -10,6 +10,7 @@ class Funnel extends Model
         'user_id',
         'title',
         'description',
+        'category_id',
     ];
 
     public function user()

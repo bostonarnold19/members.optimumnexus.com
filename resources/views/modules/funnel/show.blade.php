@@ -6,39 +6,15 @@
     <li class="breadcrumb-item active">Funnels/{{$funnel->title}}</li>
 </ol>
 <div class="row">
-    <div class="col-md-4">
-        <a href="#"  data-toggle="modal" data-target="#addpage">
-            <div class="well">
-                <i class="fa fa-book fa-4x fa-fw" aria-hidden="true"></i>
-                <div class="text">
-                    <h3>Add Pages</h3>
-                    <p>Total funnel page(s) : {{ $funnel->pages()->count() }}</p>
-                </div>
-            </div>
+        <a href="#"  data-toggle="modal" data-target="#addpage" class="btn btn-link">
+            Add External Page
         </a>
-    </div>
-    <div class="col-md-4">
-        <a href="#" data-toggle="modal" data-target="#createpost">
-            <div class="well">
-                <i class="fa fa-filter fa-4x fa-fw" aria-hidden="true"></i>
-                <div class="text">
-                    <h3>Update Funnel</h3>
-                    <p>#</p>
-                </div>
-            </div>
+        <a href="#" data-toggle="modal" data-target="#createpost" class="btn btn-link">
+            Update Funnel
         </a>
-    </div>
-    <div class="col-md-4">
-        <a href="{{ empty($funnel->user->wp_site) ? "#" : $funnel->user->wp_site }}" target="_blank" onclick="open(this.href, '_blank', '...'); return false;">
-            <div class="well">
-                <i class="fa fa-plus fa-4x fa-fw" aria-hidden="true"></i>
-                <div class="text">
-                    <h3>Create Page</h3>
-                    <p>#</p>
-                </div>
-            </div>
+        <a  class="btn btn-link" href="{{ empty($funnel->user->wp_site) ? "#" : url($funnel->user->wp_site.config('wp_settings.create_page')) }}" target="_blank">
+            Create Page from your wordpress site
         </a>
-    </div>
 </div>
 <button class="btn btn-danger" style="float: right;" form="funnel-delete" type="submit">Delete Funnel</button>
 <form id="funnel-delete" onsubmit="return confirm('Do you want to delete this data?');" method="POST" action="{{ route('funnel.destroy', $funnel->id) }}">
@@ -52,8 +28,11 @@
             <table class="table" id="datatable">
                 <thead>
                     <th>ID</th>
-                    <th>Page ID (wordpress)</th>
+                    <th>WP Page ID</th>
                     <th>Title</th>
+                    <th>Description</th>
+                    <th>Link</th>
+                    <th>Type</th>
                     <th>Action</th>
                 </thead>
                 <tbody>
@@ -62,8 +41,11 @@
                         <td>{{ $page->id }}</td>
                         <td>{{ $page->page_id }}</td>
                         <td>{{ $page->title }}</td>
+                        <td>{{ $page->description }}</td>
+                        <td>{{ $page->link }}</td>
+                        <td>{{ $page->type }}</td>
                         <td>
-                            <a href="#" class="btn {{ in_array($page->id, $funnel_pages, true) ? 'btn-danger' : 'btn-success' }}" onclick="document.getElementById('funnel-attach-page-{{$page->id}}').submit()">
+                            <a href="#" class="btn btn-sm {{ in_array($page->id, $funnel_pages, true) ? 'btn-danger' : 'btn-success' }}" onclick="document.getElementById('funnel-attach-page-{{$page->id}}').submit()">
                                 {{ in_array($page->id, $funnel_pages, true) ? 'Detach' : 'Attach' }}
                             </a>
                             <form id="funnel-attach-page-{{$page->id}}" method="POST" action="{{ route('funnel.attach_page', $page->id) }}">

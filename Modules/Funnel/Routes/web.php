@@ -13,10 +13,21 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Modules\Funnel\Ht
 
         Route::get('bagel', 'FunnelController@index')->name('bagel');
 
+        Route::resource('category-bagel', 'CategoryController');
+
+    });
+
+});
+
+Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Modules\User\Http\Controllers'], function () {
+
+    Route::group(['middleware' => 'subscription.bagel'], function () {
+
         Route::post('/update-wp-site/{id}', [
             'uses' => 'UserController@updateWpSite',
             'as' => 'post.user.update-wp-site',
         ]);
+
     });
 
 });

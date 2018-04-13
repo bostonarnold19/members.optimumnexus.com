@@ -31,6 +31,7 @@ class FunnelServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(resource_path('views/modules/funnel'), 'funnel');
         $this->loadViewsFrom(resource_path('views/modules/page'), 'page');
+        $this->loadViewsFrom(resource_path('views/modules/category/bagel'), 'category_bagel');
     }
 
     public function providers()

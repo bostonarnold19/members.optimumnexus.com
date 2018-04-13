@@ -21,6 +21,11 @@ class User extends Authenticatable
         'scraper_affiliate_number',
         'status',
         'wp_site',
+        'address',
+        'mobile',
+        'telephone',
+        'birthdate',
+        'username',
     ];
 
     protected $hidden = [
@@ -31,5 +36,10 @@ class User extends Authenticatable
     public function subscriptions()
     {
         return $this->hasMany('Modules\User\Entities\Subscription');
+    }
+
+    public function categories()
+    {
+        return $this->hasMany('Modules\Category\Entities\Category');
     }
 }
