@@ -12,6 +12,7 @@ class Page extends Model
         'description',
         'link',
         'page_id',
+        'type',
     ];
 
     public function user()
